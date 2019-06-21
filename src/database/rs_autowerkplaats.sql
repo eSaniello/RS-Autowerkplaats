@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 21, 2019 at 03:08 PM
+-- Generation Time: Jun 21, 2019 at 04:34 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `gebruiker` (
 --
 
 CREATE TABLE IF NOT EXISTS `keuring` (
-  `keuring_id` int(11) NOT NULL,
+  `keuring_id` int(11) NOT NULL AUTO_INCREMENT,
   `klant_id` int(11) DEFAULT NULL,
   `voertuig_id` int(11) DEFAULT NULL,
   `gebruikers_id` int(11) DEFAULT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `klant` (
   `klant_id` int(11) NOT NULL AUTO_INCREMENT,
   `naam` varchar(255) NOT NULL,
   `voornaam` varchar(255) NOT NULL,
-  `mobiel` varchar(255) NOT NULL,
+  `mobiel` int(255) NOT NULL,
   `adres` varchar(255) NOT NULL,
   PRIMARY KEY (`klant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `klant` (
 --
 
 CREATE TABLE IF NOT EXISTS `reparatie` (
-  `reparatie_id` int(11) NOT NULL,
+  `reparatie_id` int(11) NOT NULL AUTO_INCREMENT,
   `klant_id` int(11) DEFAULT NULL,
   `voertuig_id` int(11) DEFAULT NULL,
   `gebruikers_id` int(11) DEFAULT NULL,
@@ -100,11 +100,21 @@ CREATE TABLE IF NOT EXISTS `reparatie` (
 --
 
 CREATE TABLE IF NOT EXISTS `tarief` (
-  `tarief_id` int(11) NOT NULL AUTO_INCREMENT,
+  `categorie` varchar(11) NOT NULL,
   `wegsleep` double NOT NULL,
   `keuring` double NOT NULL,
-  PRIMARY KEY (`tarief_id`)
+  PRIMARY KEY (`categorie`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tarief`
+--
+
+INSERT INTO `tarief` (`categorie`, `wegsleep`, `keuring`) VALUES
+('P1', 5, 50),
+('P2', 10, 100),
+('P3', 15, 150),
+('P4', 20, 200);
 
 -- --------------------------------------------------------
 
@@ -114,14 +124,14 @@ CREATE TABLE IF NOT EXISTS `tarief` (
 
 CREATE TABLE IF NOT EXISTS `voertuig` (
   `voertuig_id` int(11) NOT NULL AUTO_INCREMENT,
-  `klant_id` int(11) NOT NULL,
+  `klant_id` int(11) DEFAULT NULL,
   `merk` varchar(255) NOT NULL,
   `model` varchar(255) NOT NULL,
-  `bouwjaar` tinyint(4) NOT NULL,
+  `bouwjaar` int(11) DEFAULT NULL,
   `kenteken_nr` varchar(255) NOT NULL,
-  `chassis_nr` varchar(255) NOT NULL,
-  `categorie` varchar(255) NOT NULL,
-  `keuring_vervaldatum` date NOT NULL,
+  `chassis_nr` varchar(255) DEFAULT NULL,
+  `categorie` varchar(255) DEFAULT NULL,
+  `keuring_vervaldatum` date DEFAULT NULL,
   PRIMARY KEY (`voertuig_id`),
   KEY `klant_id` (`klant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -133,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `voertuig` (
 --
 
 CREATE TABLE IF NOT EXISTS `wegsleep` (
-  `wegsleep_id` int(11) NOT NULL,
+  `wegsleep_id` int(11) NOT NULL AUTO_INCREMENT,
   `klant_id` int(11) DEFAULT NULL,
   `voertuig_id` int(11) DEFAULT NULL,
   `gebruikers_id` int(11) DEFAULT NULL,
