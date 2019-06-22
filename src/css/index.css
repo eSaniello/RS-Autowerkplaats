@@ -5,7 +5,7 @@
 
 ._container{
     position: absolute;
-    top: 15vh;
+    top: 13vh;
     left: 15%;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -16,4 +16,41 @@
     position: absolute;
     top: 0px;
     left: 25%;
+}
+
+.reparatie_tab{
+    position: absolute;
+    width: 25%;
+    height: 15vh;
+    left: 5%;
+    top: 5vh;
+    background: #2A1FA2;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+.wegsleep_tab{
+    position: absolute;
+    width: 25%;
+    height: 15vh;
+    left: 37%;
+    top: 5vh;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+.keuring_tab{
+    position: absolute;
+    width: 25%;
+    height: 15vh;
+    left: 69%;
+    top: 5vh;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+.container_content{
+    margin-top: 25vh;
 }
