@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 21, 2019 at 04:34 PM
+-- Generation Time: Jun 28, 2019 at 04:00 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -28,14 +28,13 @@ SET time_zone = "+00:00";
 -- Table structure for table `gebruiker`
 --
 
-CREATE TABLE IF NOT EXISTS `gebruiker` (
-  `gebruikers_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `gebruiker` (
+  `gebruikers_id` int(11) NOT NULL,
   `naam` varchar(255) NOT NULL,
   `voornaam` varchar(255) NOT NULL,
   `gebruikersnaam` varchar(255) NOT NULL,
   `wachtwoord` varchar(1024) NOT NULL,
-  `rol` varchar(255) NOT NULL,
-  PRIMARY KEY (`gebruikers_id`)
+  `rol` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -44,18 +43,14 @@ CREATE TABLE IF NOT EXISTS `gebruiker` (
 -- Table structure for table `keuring`
 --
 
-CREATE TABLE IF NOT EXISTS `keuring` (
-  `keuring_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `keuring` (
+  `keuring_id` int(11) NOT NULL,
   `klant_id` int(11) DEFAULT NULL,
   `voertuig_id` int(11) DEFAULT NULL,
   `gebruikers_id` int(11) DEFAULT NULL,
   `datum` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `nieuw_vervaldatum` date NOT NULL,
-  `prijs` double NOT NULL,
-  PRIMARY KEY (`keuring_id`),
-  KEY `klant_id` (`klant_id`),
-  KEY `voertuig_id` (`voertuig_id`),
-  KEY `gebruikers_id` (`gebruikers_id`)
+  `prijs` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -64,13 +59,12 @@ CREATE TABLE IF NOT EXISTS `keuring` (
 -- Table structure for table `klant`
 --
 
-CREATE TABLE IF NOT EXISTS `klant` (
-  `klant_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `klant` (
+  `klant_id` int(11) NOT NULL,
   `naam` varchar(255) NOT NULL,
   `voornaam` varchar(255) NOT NULL,
   `mobiel` int(255) NOT NULL,
-  `adres` varchar(255) NOT NULL,
-  PRIMARY KEY (`klant_id`)
+  `adres` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -79,18 +73,14 @@ CREATE TABLE IF NOT EXISTS `klant` (
 -- Table structure for table `reparatie`
 --
 
-CREATE TABLE IF NOT EXISTS `reparatie` (
-  `reparatie_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `reparatie` (
+  `reparatie_id` int(11) NOT NULL,
   `klant_id` int(11) DEFAULT NULL,
   `voertuig_id` int(11) DEFAULT NULL,
   `gebruikers_id` int(11) DEFAULT NULL,
   `datum` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `omschrijving` varchar(255) NOT NULL,
-  `prijs` double NOT NULL,
-  PRIMARY KEY (`reparatie_id`),
-  KEY `klant_id` (`klant_id`),
-  KEY `voertuig_id` (`voertuig_id`),
-  KEY `gebruikers_id` (`gebruikers_id`)
+  `prijs` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -99,11 +89,10 @@ CREATE TABLE IF NOT EXISTS `reparatie` (
 -- Table structure for table `tarief`
 --
 
-CREATE TABLE IF NOT EXISTS `tarief` (
+CREATE TABLE `tarief` (
   `categorie` varchar(11) NOT NULL,
   `wegsleep` double NOT NULL,
-  `keuring` double NOT NULL,
-  PRIMARY KEY (`categorie`)
+  `keuring` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -122,8 +111,8 @@ INSERT INTO `tarief` (`categorie`, `wegsleep`, `keuring`) VALUES
 -- Table structure for table `voertuig`
 --
 
-CREATE TABLE IF NOT EXISTS `voertuig` (
-  `voertuig_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `voertuig` (
+  `voertuig_id` int(11) NOT NULL,
   `klant_id` int(11) DEFAULT NULL,
   `merk` varchar(255) NOT NULL,
   `model` varchar(255) NOT NULL,
@@ -131,9 +120,7 @@ CREATE TABLE IF NOT EXISTS `voertuig` (
   `kenteken_nr` varchar(255) NOT NULL,
   `chassis_nr` varchar(255) DEFAULT NULL,
   `categorie` varchar(255) DEFAULT NULL,
-  `keuring_vervaldatum` date DEFAULT NULL,
-  PRIMARY KEY (`voertuig_id`),
-  KEY `klant_id` (`klant_id`)
+  `keuring_vervaldatum` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -142,21 +129,113 @@ CREATE TABLE IF NOT EXISTS `voertuig` (
 -- Table structure for table `wegsleep`
 --
 
-CREATE TABLE IF NOT EXISTS `wegsleep` (
-  `wegsleep_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `wegsleep` (
+  `wegsleep_id` int(11) NOT NULL,
   `klant_id` int(11) DEFAULT NULL,
   `voertuig_id` int(11) DEFAULT NULL,
   `gebruikers_id` int(11) DEFAULT NULL,
   `wegsleep_datum` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `afhaal_datum` date NOT NULL,
+  `afhaal_datum` date DEFAULT NULL,
   `prijs` double DEFAULT NULL,
   `voertuig_status` varchar(255) NOT NULL,
-  `afstand_km` int(11) DEFAULT NULL,
-  PRIMARY KEY (`wegsleep_id`),
-  KEY `klant_id` (`klant_id`),
-  KEY `voertuig_id` (`voertuig_id`),
-  KEY `gebruikers_id` (`gebruikers_id`)
+  `afstand_km` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `gebruiker`
+--
+ALTER TABLE `gebruiker`
+  ADD PRIMARY KEY (`gebruikers_id`);
+
+--
+-- Indexes for table `keuring`
+--
+ALTER TABLE `keuring`
+  ADD PRIMARY KEY (`keuring_id`),
+  ADD KEY `klant_id` (`klant_id`),
+  ADD KEY `voertuig_id` (`voertuig_id`),
+  ADD KEY `gebruikers_id` (`gebruikers_id`);
+
+--
+-- Indexes for table `klant`
+--
+ALTER TABLE `klant`
+  ADD PRIMARY KEY (`klant_id`);
+
+--
+-- Indexes for table `reparatie`
+--
+ALTER TABLE `reparatie`
+  ADD PRIMARY KEY (`reparatie_id`),
+  ADD KEY `klant_id` (`klant_id`),
+  ADD KEY `voertuig_id` (`voertuig_id`),
+  ADD KEY `gebruikers_id` (`gebruikers_id`);
+
+--
+-- Indexes for table `tarief`
+--
+ALTER TABLE `tarief`
+  ADD PRIMARY KEY (`categorie`);
+
+--
+-- Indexes for table `voertuig`
+--
+ALTER TABLE `voertuig`
+  ADD PRIMARY KEY (`voertuig_id`),
+  ADD KEY `klant_id` (`klant_id`);
+
+--
+-- Indexes for table `wegsleep`
+--
+ALTER TABLE `wegsleep`
+  ADD PRIMARY KEY (`wegsleep_id`),
+  ADD KEY `klant_id` (`klant_id`),
+  ADD KEY `voertuig_id` (`voertuig_id`),
+  ADD KEY `gebruikers_id` (`gebruikers_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `gebruiker`
+--
+ALTER TABLE `gebruiker`
+  MODIFY `gebruikers_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `keuring`
+--
+ALTER TABLE `keuring`
+  MODIFY `keuring_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `klant`
+--
+ALTER TABLE `klant`
+  MODIFY `klant_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `reparatie`
+--
+ALTER TABLE `reparatie`
+  MODIFY `reparatie_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `voertuig`
+--
+ALTER TABLE `voertuig`
+  MODIFY `voertuig_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `wegsleep`
+--
+ALTER TABLE `wegsleep`
+  MODIFY `wegsleep_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

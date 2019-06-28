@@ -199,7 +199,7 @@
 
                 <div class="fixed-action-btn">
                     <a class="btn-floating btn-large red">
-                        <i class="large material-icons">add_circle_outline</i>
+                        <i class="large material-icons">add</i>
                     </a>
                     <ul>
                         <li><a class="btn-floating red tooltipped" data-position="left" data-tooltip="Wegslepen">
