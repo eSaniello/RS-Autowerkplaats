@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Russo+One&display=swap');
 
 * {
   font-family: "Montserrat", sans-serif;
@@ -7,6 +8,14 @@
 .header {
   height: 35vh;
   background: #2a1fa2;
+}
+
+.logo{
+  position: absolute;
+  top: 10;
+  left: 10;
+  width: 5%;
+  height: 25%;
 }
 
 ._container {
@@ -22,7 +31,7 @@
   position: absolute;
   top: 2vh;
   left: 37%;
-  font-size: 250%;
+  font-family: 'Russo One', sans-serif;
 }
 
 /* Reparatie tab */

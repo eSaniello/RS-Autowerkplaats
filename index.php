@@ -27,13 +27,11 @@
     <div class="row">
         <nav class="z-depth-0 header">
             <div class="nav-wrapper">
-                <a href="#" class="brand-logo">
-                    <img src='src/media/logo.svg'>
-                </a>
+                <img class="brand-logo logo" src='src/media/logo.png'>
                 <ul id="nav-mobile" class="right">
                     <li><span class="company_name flow-text">RS AUTOWERKPLAATS</span></li>
-                    <li><a class="btn waves-effect yellow darken-2" style="border-radius: 50%"><i class="material-icons">settings</i></a></li>
-                    <li><a class="btn waves-effect yellow darken-2" style="border-radius: 50%"><i class="material-icons">person_pin</i></a></li>
+                    <li><a class="btn waves-effect yellow darken-2" style="border-radius: 30%"><i class="material-icons">settings</i></a></li>
+                    <li><a class="btn waves-effect yellow darken-2" style="border-radius: 30%"><i class="material-icons">person_pin</i></a></li>
                 </ul>
             </div>
         </nav>
