@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 28, 2019 at 04:00 PM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.0
+-- Generation Time: Jun 21, 2019 at 04:52 PM
+-- Server version: 10.1.36-MariaDB
+-- PHP Version: 5.6.38
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -135,7 +135,7 @@ CREATE TABLE `wegsleep` (
   `voertuig_id` int(11) DEFAULT NULL,
   `gebruikers_id` int(11) DEFAULT NULL,
   `wegsleep_datum` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `afhaal_datum` date DEFAULT NULL,
+  `afhaal_datum` date NOT NULL,
   `prijs` double DEFAULT NULL,
   `voertuig_status` varchar(255) NOT NULL,
   `afstand_km` int(11) DEFAULT NULL
