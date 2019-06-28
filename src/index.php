@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+
+<?php
+require_once "../incl/config.php";
+?>
+
 <html>
 
 <head>
@@ -51,7 +56,7 @@
 			</form>
 
 			<!-- Klant kiezen -->
-			<form class="col s12" action="#!" method="post" id="klant_kiezen_form">
+			<form class="col s12" action="" method="post" id="klant_kiezen_form">
 				<h3>Reparatie</h3>
 				<br>
 				<h5>Klant Kiezen</h5>
@@ -65,9 +70,52 @@
 						<label for="voornaam">Voornaam</label>
 					</div>
 					<div class="input-field col s3 offset-s1">
-						<button class="blue darken-4 waves-effect waves-light btn" type="submit">Check</button>
+						<button class="blue darken-4 waves-effect waves-light btn" type="submit"
+							name="btn_check_klanten">Check</button>
 					</div>
 				</div>
+
+
+				<!-- check -->
+				<div class="row">
+					<table class="responsive-table" id="tbl_check_klant">
+						<th>ID</th>
+						<th>Naam</th>
+						<th>Voornaam</th>
+						<th>Mobiel</th>
+						<th>Adres</th>
+
+						<?php
+						$naam = mysqli_real_escape_string($link, $_POST['naam']);
+						$voornaam = mysqli_real_escape_string($link, $_POST['voornaam']);
+
+						if (isset($naam, $voornaam)){
+						echo 'hi';
+						};
+
+						$results = mysqli_query($link,"SELECT * FROM klant");
+						while($row = mysqli_fetch_array($results)) {
+						?>
+
+						<tr>
+							<td><?php echo $row['klant_id']?></td>
+							<td><?php echo $row['naam']?></td>
+							<td><?php echo $row['voornaam']?></td>
+							<td><?php echo $row['mobiel']?></td>
+							<td><?php echo $row['adres']?></td>
+						</tr>
+
+						<?php
+						}
+
+						?>
+
+					</table>
+
+
+				</div>
+
+
 
 				<div class="row">
 					<div class="input-field col s6">
