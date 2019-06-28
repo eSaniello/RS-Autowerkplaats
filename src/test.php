@@ -71,7 +71,8 @@ require_once "incl/config.php";
                         <label for="voornaam">Voornaam</label>
                     </div>
                     <div class="input-field col s3 offset-s1">
-                        <button class="blue darken-4 waves-effect waves-light btn" type="submit">Check</button>
+                        <button class="blue darken-4 waves-effect waves-light btn" type="submit"
+                            name="check_klant">Check</button>
                     </div>
 
 
@@ -86,15 +87,19 @@ require_once "incl/config.php";
                         <th>Adres</th>
 
                         <?php
-						$naam = mysqli_real_escape_string($link, $_POST['naam']);
+						
+
+						if (isset($_POST['check_klant'])){
+                        $naam = mysqli_real_escape_string($link, $_POST['naam']);
 						$voornaam = mysqli_real_escape_string($link, $_POST['voornaam']);
 
-						if (isset($naam, $voornaam)){
-						$results = mysqli_query($link,"SELECT * FROM klant WHERE naam === $naam && voornaam === $naam");
+                        $results = mysqli_query($link,"SELECT * FROM klant WHERE naam === $naam && voornaam === $naam");
+                        echo $results;
+                        while($row = mysqli_fetch_array($results)) {
 						};
-echo $results;
+
 						
-						while($row = mysqli_fetch_array($results)) {
+						
 						?>
 
                         <tr>
