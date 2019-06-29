@@ -31,12 +31,19 @@ require_once "incl/config.php";
                 <br>
                 <h5>Voertuig Kiezen</h5>
                 <div class="row">
-                    <div class="input-field col s5">
-                        <input id="kentekennummer" name="kentekennummer" type="text" class="validate" required />
-                        <label for="kentekennummer">Kentekennummer</label>
-                    </div>
-                    <div class="input-field col s5 offset-s1">
-                        <button class="blue darken-4 waves-effect waves-light btn" type="submit">Check</button>
+                    <div class="input-field col s6">
+                        <select name="voertuig" required>
+                            <?php
+				                    include 'incl/db.php';
+				                    $sql = "SELECT * FROM voertuig ORDER BY naam ASC";
+				                    $result = mysqli_query($link, $sql);
+
+				                    while($row = mysqli_fetch_array($result)) {
+				                    	echo "<option value=". $row['klant_id'] . ">" . $row['naam'] . " " . $row['voornaam'] . "	| " . $row['mobiel'] . "    | " . $row['adres'] . "</option>";
+				                    }
+			                    ?>
+                        </select>
+                        <label>Klant</label>
                     </div>
                 </div>
 
@@ -62,60 +69,22 @@ require_once "incl/config.php";
                 <br>
                 <h5>Klant Kiezen</h5>
                 <div class="row">
-                    <div class="input-field col s3">
-                        <input id="naam" name="naam" type="text" class="validate" required />
-                        <label for="naam">Naam</label>
+
+                    <div class="input-field col s6">
+                        <select name="klant" required>
+                            <?php
+				                    include 'incl/db.php';
+				                    $sql = "SELECT * FROM klant ORDER BY naam ASC";
+				                    $result = mysqli_query($link, $sql);
+
+				                    while($row = mysqli_fetch_array($result)) {
+				                    	echo "<option value=". $row['klant_id'] . ">" . $row['naam'] . " " . $row['voornaam'] . "	| " . $row['mobiel'] . "    | " . $row['adres'] . "</option>";
+				                    }
+			                    ?>
+                        </select>
+                        <label>Klant</label>
                     </div>
-                    <div class="input-field col s3">
-                        <input id="voornaam" name="voornaam" type="text" class="validate" required />
-                        <label for="voornaam">Voornaam</label>
-                    </div>
-                    <div class="input-field col s3 offset-s1">
-                        <button class="blue darken-4 waves-effect waves-light btn" type="submit"
-                            name="check_klant">Check</button>
-                    </div>
 
-
-                </div>
-                <!-- check -->
-                <div class="row">
-                    <table class="responsive-table" id="tbl_check_klant">
-                        <th>ID</th>
-                        <th>Naam</th>
-                        <th>Voornaam</th>
-                        <th>Mobiel</th>
-                        <th>Adres</th>
-
-                        <?php
-						
-
-						if (isset($_POST['check_klant'])){
-                        $naam = mysqli_real_escape_string($link, $_POST['naam']);
-						$voornaam = mysqli_real_escape_string($link, $_POST['voornaam']);
-
-                        $results = mysqli_query($link,"SELECT * FROM klant WHERE naam === $naam && voornaam === $naam");
-                        echo $results;
-                        while($row = mysqli_fetch_array($results)) {
-						};
-
-						
-						
-						?>
-
-                        <tr>
-                            <td><?php echo $row['klant_id']?></td>
-                            <td><?php echo $row['naam']?></td>
-                            <td><?php echo $row['voornaam']?></td>
-                            <td><?php echo $row['mobiel']?></td>
-                            <td><?php echo $row['adres']?></td>
-                        </tr>
-
-                        <?php
-						}
-
-						?>
-
-                    </table>
 
 
                 </div>
@@ -213,6 +182,13 @@ require_once "incl/config.php";
                             <label for="chassisnummer">Chassisnummer</label>
                         </div>
 
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <input id="keuring_vervaldatum" name="keuring_vervaldatum" type="text" class="validate" />
+                            <label for="keuring_vervaldatum">Keuring_vervaldatum</label>
+                        </div>
                     </div>
 
 
