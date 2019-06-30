@@ -31,10 +31,13 @@ require_once "incl/config.php";
                 <br>
                 <h5>Voertuig Kiezen</h5>
                 <div class="row">
-                    <div class="input-field col s6">
-                        <select name="voertuig" required>
-                            <?php
-				                    include 'incl/db.php';
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <select name="voertuig" required>
+                                <option value disabled selected>kies een voertuig</option>
+                                <?php
+                                    $klant= mysqli_real_escape_string($link, $_POST['klant']);
+
 				                    $sql = "SELECT * FROM voertuig ORDER BY naam ASC";
 				                    $result = mysqli_query($link, $sql);
 
@@ -42,8 +45,19 @@ require_once "incl/config.php";
 				                    	echo "<option value=". $row['klant_id'] . ">" . $row['naam'] . " " . $row['voornaam'] . "	| " . $row['mobiel'] . "    | " . $row['adres'] . "</option>";
 				                    }
 			                    ?>
-                        </select>
-                        <label>Klant</label>
+                            </select>
+                            <label>Voertuig</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <h6 class="input-field col s6">
+                            <?php 
+                            $klant= mysqli_real_escape_string($link,$_POST['klant']);
+                            echo $klant;
+                            ?>
+                        </h6>
+
                     </div>
                 </div>
 
@@ -72,8 +86,9 @@ require_once "incl/config.php";
 
                     <div class="input-field col s6">
                         <select name="klant" required>
+                            <option value disabled selected>kies een klant</option>
                             <?php
-				                    include 'incl/db.php';
+				                    
 				                    $sql = "SELECT * FROM klant ORDER BY naam ASC";
 				                    $result = mysqli_query($link, $sql);
 
@@ -174,21 +189,28 @@ require_once "incl/config.php";
                     </div>
                     <div class="row">
                         <div class="input-field col s5">
-                            <input id="kentekennummer" name="kentekennummer" type="text" class="validate" />
-                            <label for="kentekennummer">Kentekennummer</label>
+                            <input id="kenteken_nr" name="kenteken_nr" type="text" class="validate" />
+                            <label for="kenteken_nr">Kentekennummer</label>
                         </div>
                         <div class="input-field col s5 offset-s1">
-                            <input id="chassisnummer" name="chassisnummer" type="text" class="validate" />
-                            <label for="chassisnummer">Chassisnummer</label>
+                            <input id="chassis_nr" name="chassis_nr" type="text" class="validate" />
+                            <label for="chassis_nr">Chassisnummer</label>
                         </div>
 
                     </div>
 
                     <div class="row">
                         <div class="input-field col s5">
-                            <input id="keuring_vervaldatum" name="keuring_vervaldatum" type="text" class="validate" />
-                            <label for="keuring_vervaldatum">Keuring_vervaldatum</label>
+                            <input id="keuring_vervaldatum" name="keuring_vervaldatum" type="text"
+                                class="datepicker validate" />
+                            <label for="keuring_vervaldatum">Keuring Vervaldatum</label>
                         </div>
+                        <!-- 
+                        <div class="input-field col s6">
+                            <input name="nieuw-keuring" type="text" class="datepicker" required>
+                            <label for="nieuw-keuring">Nieuw keuring vervaldatum</label>
+                        </div> -->
+
                     </div>
 
 

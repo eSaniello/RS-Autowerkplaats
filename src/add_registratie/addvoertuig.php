@@ -6,8 +6,8 @@ require_once "../incl/config.php";
             $model = mysqli_real_escape_string($link, $_POST['model']);
             $categorie = mysqli_real_escape_string($link, $_POST['categorie']);
             $bouwjaar = mysqli_real_escape_string($link, $_POST['bouwjaar']);
-            $kentekennummer = mysqli_real_escape_string($link, $_POST['kentekennummer']);
-            $chassisnummer = mysqli_real_escape_string($link, $_POST['chassisnummer']);
+            $kenteken_nr = mysqli_real_escape_string($link, $_POST['kenteken_nr']);
+            $chassis_nr = mysqli_real_escape_string($link, $_POST['chassis_nr']);
             $keuring_vervaldatum = mysqli_real_escape_string($link, $_POST['keuring_vervaldatum']);
             
             
