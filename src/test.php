@@ -16,6 +16,7 @@ require_once "incl/config.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Import javascript file -->
     <script type="text/javascript" src="lib/materialize/js/materialize.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
 </head>
 
 <body>
@@ -36,7 +37,7 @@ require_once "incl/config.php";
                             <select name="voertuig" required>
                                 <option value disabled selected>kies een voertuig</option>
                                 <?php
-                                    $klant= mysqli_real_escape_string($link, $_POST['klant']);
+                                    
 
 				                    $sql = "SELECT * FROM voertuig ORDER BY naam ASC";
 				                    $result = mysqli_query($link, $sql);
@@ -46,6 +47,7 @@ require_once "incl/config.php";
 				                    }
 			                    ?>
                             </select>
+
                             <label>Voertuig</label>
                         </div>
                     </div>
@@ -53,7 +55,9 @@ require_once "incl/config.php";
                     <div class="row">
                         <h6 class="input-field col s6">
                             <?php 
-                            $klant= mysqli_real_escape_string($link,$_POST['klant']);
+                            $klant= mysqli_fetch_array($_POST['klant']);
+                            // $klant = $_POST['klant'];
+                            // $klant= mysqli_real_escape_string($link, $klant);
                             echo $klant;
                             ?>
                         </h6>
@@ -83,15 +87,11 @@ require_once "incl/config.php";
                 <br>
                 <h5>Klant Kiezen</h5>
                 <div class="row">
-
                     <div class="input-field col s6">
-                        <select name="klant" required>
-                            <option value disabled selected>kies een klant</option>
+                        <select name="klant" id="klant" required>
                             <?php
-				                    
 				                    $sql = "SELECT * FROM klant ORDER BY naam ASC";
 				                    $result = mysqli_query($link, $sql);
-
 				                    while($row = mysqli_fetch_array($result)) {
 				                    	echo "<option value=". $row['klant_id'] . ">" . $row['naam'] . " " . $row['voornaam'] . "	| " . $row['mobiel'] . "    | " . $row['adres'] . "</option>";
 				                    }
@@ -99,9 +99,6 @@ require_once "incl/config.php";
                         </select>
                         <label>Klant</label>
                     </div>
-
-
-
                 </div>
 
                 <div class="row">
@@ -362,6 +359,9 @@ require_once "incl/config.php";
             document.getElementById('voertuigen_registratie_form').style.display = 'none';
             document.getElementById('klanten_registratie_form').style.display = 'none';
             document.getElementById('voertuig_kiezen_form').style.display = 'block';
+
+        setKlant();
+
         }
 
         function open_reparatie_beschrijving_form() {
