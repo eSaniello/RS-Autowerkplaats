@@ -1,29 +1,24 @@
 <?php
-   include("database.php");
-   session_start();
-   
-   if($_SERVER["REQUEST_METHOD"] == "POST") {
-      // username and password sent from form 
-      
-      $gebrn = mysqli_real_escape_string($conn,$_POST['gebruikersnaam']);
-      $wachtw= mysqli_real_escape_string($conn,$_POST['wachtwoord']); 
-      
-      $sql = "SELECT gebruikers_id FROM gebruiker WHERE gebruikersnaam = '$gebrn' and wachtwoord = '$wachtw'";
-      $result = mysqli_query($conn,$sql);
-      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+include("database.php");
+session_start();
 
-      
-      $count = mysqli_num_rows($result);
-      
-      // If result matched $myusername and $mypassword, table row must be 1 row
-		
-      if($count == 1) {
-         //session_register("gebruikersnaam");
-         $_SESSION['login'] = $gebrn;
-         
-         header("location: home.html");
-      }else {
-		header("location: index.php?Your Login Name or Password is invalid");
-      }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+   $gebruikers_naam = mysqli_real_escape_string($conn, $_POST['gebruikersnaam']);
+   $wachtwoord = mysqli_real_escape_string($conn, $_POST['wachtwoord']);
+
+   $sql = "SELECT gebruikers_id FROM gebruiker WHERE gebruikersnaam = '$gebruikers_naam' and wachtwoord = '$wachtwoord'";
+   $result = mysqli_query($conn, $sql);
+   $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+
+   $count = mysqli_num_rows($result);
+
+   if ($count == 1) {
+      $_SESSION['gebruikers_id'] = $row['gebruikers_id'];
+
+      header("location: home.php?login=success");
+   } else {
+      header("location: index.php?Your Login Name or Password is invalid");
    }
-?>
+}
