@@ -9,6 +9,10 @@ require_once "../incl/config.php";
             $kenteken_nr = mysqli_real_escape_string($link, $_POST['kenteken_nr']);
             $chassis_nr = mysqli_real_escape_string($link, $_POST['chassis_nr']);
             $keuring_vervaldatum = mysqli_real_escape_string($link, $_POST['keuring_vervaldatum']);
+            $klantnaam = mysqli_real_escape_string($link, $_POST['naam']);
+            $klantvoornaam = mysqli_real_escape_string($link, $_POST['voornaam']);
+
+            $klant_id = query("SELECT klant_id FROM klant where naam == $klantnaam && voornaam == $klantvoornaam");
             
             
                 $sql = "INSERT INTO voertuig(merk, model, bouwjaar, kenteken_nr, chassis_nr, categorie, keuring_vervaldatum)

@@ -16,121 +16,218 @@ require_once "incl/config.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Import javascript file -->
     <script type="text/javascript" src="lib/materialize/js/materialize.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
 </head>
 
 <body>
     <!-- REPARATIE MODAL -->
     <!-- zet alle inhoud van die verschillende steps van je registratie modal in divs met ids -->
-    <div id="reparatie_modal" class="modal" style="height: 600px; width: 1000px;">
+    <div id="klant_kiezen_modal" class="modal" style="height: 600px; width: 1000px;">
         <div class="modal-content">
-            <!-- all the inhouds should be in seperate div's or form's here with buttons closing n opening others -->
-
-            <!-- voertuig kiezen -->
-            <form class="col s12" action="#!" method="post" id="voertuig_kiezen_form">
-                <h3>Reparatie</h3>
-                <br>
-                <h5>Voertuig Kiezen</h5>
-                <div class="row">
-                    <div class="input-field col s5">
-                        <input id="kentekennummer" name="kentekennummer" type="text" class="validate" required />
-                        <label for="kentekennummer">Kentekennummer</label>
-                    </div>
-                    <div class="input-field col s5 offset-s1">
-                        <button class="blue darken-4 waves-effect waves-light btn" type="submit">Check</button>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="input-field col s6">
-                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger"
-                            href="#modal_klant_kiezen" onclick="open_klant_kiezen_form()">Terug</button>
-
-                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#modal1"
-                            onclick="open_voertuigenregistratie_form()">Nieuw
-                            Voertuig</button>
-
-                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#modal_klant_kiezen"
-                            type="submit" onclick="open_reparatie_beschrijving_form()">Volgende
-                        </li>
-                    </div>
-                </div>
-            </form>
-
             <!-- Klant kiezen -->
             <form class="col s12" action="" method="post" id="klant_kiezen_form">
                 <h3>Reparatie</h3>
                 <br>
                 <h5>Klant Kiezen</h5>
                 <div class="row">
-                    <div class="input-field col s3">
-                        <input id="naam" name="naam" type="text" class="validate" required />
-                        <label for="naam">Naam</label>
+                    <div class="input-field col s6">
+                        <select name="klant" id="klant" required>
+                            <?php
+				                    $sql = "SELECT * FROM klant ORDER BY naam ASC";
+				                    $result = mysqli_query($link, $sql);
+				                    while($row = mysqli_fetch_array($result)) {
+				                    	echo "<option value=". $row['klant_id'] . ">" . $row['naam'] . " " . $row['voornaam'] . "	| " . $row['mobiel'] . "    | " . $row['adres'] . "</option>";
+				                    }
+			                    ?>
+                        </select>
+                        <label>Klant</label>
                     </div>
-                    <div class="input-field col s3">
-                        <input id="voornaam" name="voornaam" type="text" class="validate" required />
-                        <label for="voornaam">Voornaam</label>
-                    </div>
-                    <div class="input-field col s3 offset-s1">
-                        <button class="blue darken-4 waves-effect waves-light btn" type="submit"
-                            name="check_klant">Check</button>
-                    </div>
-
-
-                </div>
-                <!-- check -->
-                <div class="row">
-                    <table class="responsive-table" id="tbl_check_klant">
-                        <th>ID</th>
-                        <th>Naam</th>
-                        <th>Voornaam</th>
-                        <th>Mobiel</th>
-                        <th>Adres</th>
-
-                        <?php
-						
-
-						if (isset($_POST['check_klant'])){
-                        $naam = mysqli_real_escape_string($link, $_POST['naam']);
-						$voornaam = mysqli_real_escape_string($link, $_POST['voornaam']);
-
-                        $results = mysqli_query($link,"SELECT * FROM klant WHERE naam === $naam && voornaam === $naam");
-                        echo $results;
-                        while($row = mysqli_fetch_array($results)) {
-						};
-
-						
-						
-						?>
-
-                        <tr>
-                            <td><?php echo $row['klant_id']?></td>
-                            <td><?php echo $row['naam']?></td>
-                            <td><?php echo $row['voornaam']?></td>
-                            <td><?php echo $row['mobiel']?></td>
-                            <td><?php echo $row['adres']?></td>
-                        </tr>
-
-                        <?php
-						}
-
-						?>
-
-                    </table>
-
-
                 </div>
 
                 <div class="row">
                     <div class="input-field col s6">
-                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#modal1"
-                            onclick="open_klantenregistratie_form()">Nieuwe
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger"
+                            href="#nieuwe_klant_modal">Nieuwe
                             Klant</button>
-                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#modal_reparatie"
-                            type="submit" onclick="open_voertuig_kiezen_form()">Volgende</li>
+                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger"
+                            href="#voertuig_kiezen_modal" type="submit">Volgende</li>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
 
+    <div id="nieuwe_klant_modal" class="modal" style="height: 600px; width: 1000px;">
+        <div class="modal-content">
+            <!-- Nieuwe Klant -->
+            <form id="nieuwe_klant_form" method="POST" action="add_registratie/addklant.php">
+                <div class="row">
+                    <h5>Klant Registreren</h5>
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <input id="naam" name="naam" type="text" class="validate" required />
+                            <label for="naam">Naam</label>
+                        </div>
+                        <div class="input-field col s5 offset-s1">
+                            <input id="voornaam" name="voornaam" type="text" class="validate" required />
+                            <label for="voornaam">Voornaam</label>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="input-field col s5">
+                            <input id="adres" name="adres" type="text" class="validate" required />
+                            <label for="adres">Adres</label>
+                        </div>
+                        <div class="input-field col s5 offset-s1">
+                            <input id="mobiel" name="mobiel" type="number" class="validate" />
+                            <label for="mobiel">Mobiel</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <button class="blue darken-4 waves-effect waves-light btn" type="submit">Opslaan</button>
+                            <a href="#!"
+                                class="modal-action modal-close waves-effect waves-red btn red lighten-1">Close</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="voertuig_kiezen_modal" class="modal" style="height: 600px; width: 1000px;">
+        <div class="modal-content">
+            <!-- voertuig kiezen -->
+            <form class="col s12" action="" method="post" id="voertuig_kiezen_form">
+                <h3>Reparatie</h3>
+                <br>
+                <h5>Voertuig Kiezen</h5>
+                <div class="row">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <select name="voertuig" required>
+                                <option value disabled selected>kies een voertuig</option>
+                                <?php
+                                    
+
+				                    $sql = "SELECT * FROM voertuig ORDER BY merk ASC";
+				                    $result = mysqli_query($link, $sql);
+
+				                    while($row = mysqli_fetch_array($result)) {
+				                    	echo "<option value=". $row['klant_id'] . ">" . $row['naam'] . " " . $row['voornaam'] . "	| " . $row['mobiel'] . "    | " . $row['adres'] . "</option>";
+				                    }
+			                    ?>
+                            </select>
+
+                            <label>Voertuig</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <h6 class="input-field col s6">
+                            <?php 
+                            $klant= mysqli_fetch_array($_POST['klant']);
+                            // $klant = $_POST['klant'];
+                            // $klant= mysqli_real_escape_string($link, $klant);
+                            echo $klant;
+                            ?>
+                        </h6>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger modal-close"
+                            href="#klant_kiezen_modal">Terug</button>
+
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger"
+                            href="#nieuw_voertuig_modal">Nieuw
+                            Voertuig</button>
+
+                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger"
+                            href="#reparatie_beschrijving_modal" type="submit">Volgende
+                        </li>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="nieuw_voertuig_modal" class="modal" style="height: 600px; width: 1000px;">
+        <div class="modal-content">
+            <!-- Nieuw Voertuig -->
+            <form id="voertuigen_registratie_form" method="POST" action="add_registratie/addvoertuig.php">
+                <div class="row">
+                    <h5>Voertuig Registreren</h5>
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <input id="merk" name="merk" type="text" class="validate" required />
+                            <label for="merk">Merk</label>
+                        </div>
+                        <div class="input-field col s5 offset-s1">
+                            <input id="model" name="model" type="text" class="validate" required />
+                            <label for="model">Model</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <input id="categorie" name="categorie" type="text" class="validate" />
+                            <label for="categorie">Categorie</label>
+                        </div>
+                        <div class="input-field col s5 offset-s1">
+                            <input id="bouwjaar" name="bouwjaar" type="text" class="validate" required />
+                            <label for="bouwjaar">Bouwjaar</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <input id="kenteken_nr" name="kenteken_nr" type="text" class="validate" />
+                            <label for="kenteken_nr">Kentekennummer</label>
+                        </div>
+                        <div class="input-field col s5 offset-s1">
+                            <input id="chassis_nr" name="chassis_nr" type="text" class="validate" />
+                            <label for="chassis_nr">Chassisnummer</label>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <input id="keuring_vervaldatum" name="keuring_vervaldatum" type="text"
+                                class="datepicker validate" />
+                            <label for="keuring_vervaldatum">Keuring Vervaldatum</label>
+                        </div>
+                        <!-- 
+                        <div class="input-field col s6">
+                            <input name="nieuw-keuring" type="text" class="datepicker" required>
+                            <label for="nieuw-keuring">Nieuw keuring vervaldatum</label>
+                        </div> -->
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <button class="blue darken-4 waves-effect waves-light btn" type="submit">Opslaan</button>
+                            <button class="blue darken-4 waves-effect waves-light btn" type="submit"
+                                onclick="open_voertuig_kiezen_form()">Doorgaan
+                                met reparatie</button>
+
+                            <a href="#!"
+                                class="modal-action modal-close waves-effect waves-red btn red lighten-1">Afsluiten</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="reparatie_beschrijving_modal" class="modal" style="height: 600px; width: 1000px;">
+        <div class="modal-content">
             <!-- Reparatie registreren -->
             <form class="col s12" action="" method="post" id="reparatie_beschrijving_form">
                 <h3>Reparatie</h3>
@@ -170,107 +267,20 @@ require_once "incl/config.php";
 
                 <div class="row">
                     <div class="input-field col s6">
-                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger"
-                            href="#modal_klant_kiezen" onclick="open_voertuig_kiezen_form()">Terug</button>
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger modal-close"
+                            href="#voertuig_kiezen_modal">Terug</button>
                         <li class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#!" type="submit">
                             Opslaan
                         </li>
                     </div>
                 </div>
             </form>
-
-            <!-- Nieuw Voertuig -->
-            <form id="voertuigen_registratie_form" method="POST" action="add_registratie/addvoertuig.php">
-                <div class="row">
-                    <h5>Voertuig Registreren</h5>
-                    <div class="row">
-                        <div class="input-field col s5">
-                            <input id="merk" name="merk" type="text" class="validate" required />
-                            <label for="merk">Merk</label>
-                        </div>
-                        <div class="input-field col s5 offset-s1">
-                            <input id="model" name="model" type="text" class="validate" required />
-                            <label for="model">Model</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s5">
-                            <input id="categorie" name="categorie" type="text" class="validate" />
-                            <label for="categorie">Categorie</label>
-                        </div>
-                        <div class="input-field col s5 offset-s1">
-                            <input id="bouwjaar" name="bouwjaar" type="text" class="validate" required />
-                            <label for="bouwjaar">Bouwjaar</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s5">
-                            <input id="kentekennummer" name="kentekennummer" type="text" class="validate" />
-                            <label for="kentekennummer">Kentekennummer</label>
-                        </div>
-                        <div class="input-field col s5 offset-s1">
-                            <input id="chassisnummer" name="chassisnummer" type="text" class="validate" />
-                            <label for="chassisnummer">Chassisnummer</label>
-                        </div>
-
-                    </div>
-
-
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <button class="blue darken-4 waves-effect waves-light btn" type="submit">Opslaan</button>
-                            <button class="blue darken-4 waves-effect waves-light btn" type="submit"
-                                onclick="open_voertuig_kiezen_form()">Doorgaan
-                                met reparatie</button>
-
-                            <a href="#!"
-                                class="modal-action modal-close waves-effect waves-red btn red lighten-1">Afsluiten</a>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-            <!-- Nieuwe Klant -->
-            <form id="klanten_registratie_form" method="POST" action="add_registratie/addklant.php">
-                <div class="row">
-                    <h5>Klant Registreren</h5>
-                    <div class="row">
-                        <div class="input-field col s5">
-                            <input id="naam" name="naam" type="text" class="validate" required />
-                            <label for="naam">Naam</label>
-                        </div>
-                        <div class="input-field col s5 offset-s1">
-                            <input id="voornaam" name="voornaam" type="text" class="validate" required />
-                            <label for="voornaam">Voornaam</label>
-                        </div>
-                    </div>
-                    <div class="row">
-
-                        <div class="input-field col s5">
-                            <input id="adres" name="adres" type="text" class="validate" required />
-                            <label for="adres">Adres</label>
-                        </div>
-                        <div class="input-field col s5 offset-s1">
-                            <input id="mobiel" name="mobiel" type="number" class="validate" />
-                            <label for="mobiel">Mobiel</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <button class="blue darken-4 waves-effect waves-light btn" type="submit">Opslaan</button>
-                            <button class="blue darken-4 waves-effect waves-light btn" type="submit"
-                                onclick="open_voertuigenregistratie_form()">Voertuig registreren</button>
-                            <a href="#!"
-                                class="modal-action modal-close waves-effect waves-red btn red lighten-1">Close</a>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
         </div>
-
     </div>
+
+
+
+
 
 
     <!-- wrench moet naar reparatie modal -->
@@ -285,9 +295,8 @@ require_once "incl/config.php";
                                 style="height: 18px; width: 26px;"></i></a></li>
             <li><a class="btn-floating blue darken-4 modal-trigger" href="#modal2"><i class="material-icons"><img
                             src="img/car-icon.png" style="height: 24px; width: 24px;"></i></a></li>
-            <li><a class="btn-floating yellow darken-2 modal-trigger" href="#reparatie_modal"
-                    onclick="open_klant_kiezen_form()"><i class="material-icons"><img src="img/wrench.png"
-                            style="height: 24px; width: 24px;"></i></a>
+            <li><a class="btn-floating yellow darken-2 modal-trigger" href="#klant_kiezen_modal"><i
+                        class="material-icons"><img src="img/wrench.png" style="height: 24px; width: 24px;"></i></a>
             </li>
         </ul>
     </div>
@@ -348,47 +357,6 @@ require_once "incl/config.php";
                 hoverEnabled: false
             });
         });
-
-
-        function open_klant_kiezen_form() {
-            document.getElementById('voertuig_kiezen_form').style.display = 'none';
-            document.getElementById('reparatie_beschrijving_form').style.display = 'none';
-            document.getElementById('voertuigen_registratie_form').style.display = 'none';
-            document.getElementById('klanten_registratie_form').style.display = 'none';
-            document.getElementById('klant_kiezen_form').style.display = 'block';
-        }
-
-        function open_voertuig_kiezen_form() {
-            document.getElementById('reparatie_beschrijving_form').style.display = 'none';
-            document.getElementById('klant_kiezen_form').style.display = 'none';
-            document.getElementById('voertuigen_registratie_form').style.display = 'none';
-            document.getElementById('klanten_registratie_form').style.display = 'none';
-            document.getElementById('voertuig_kiezen_form').style.display = 'block';
-        }
-
-        function open_reparatie_beschrijving_form() {
-            document.getElementById('voertuig_kiezen_form').style.display = 'none';
-            document.getElementById('klant_kiezen_form').style.display = 'none';
-            document.getElementById('voertuigen_registratie_form').style.display = 'none';
-            document.getElementById('klanten_registratie_form').style.display = 'none';
-            document.getElementById('reparatie_beschrijving_form').style.display = 'block';
-        }
-
-        function open_klantenregistratie_form() {
-            document.getElementById('voertuig_kiezen_form').style.display = 'none';
-            document.getElementById('klant_kiezen_form').style.display = 'none';
-            document.getElementById('voertuigen_registratie_form').style.display = 'none';
-            document.getElementById('reparatie_beschrijving_form').style.display = 'none';
-            document.getElementById('klanten_registratie_form').style.display = 'block';
-        }
-
-        function open_voertuigenregistratie_form() {
-            document.getElementById('voertuig_kiezen_form').style.display = 'none';
-            document.getElementById('klant_kiezen_form').style.display = 'none';
-            document.getElementById('reparatie_beschrijving_form').style.display = 'none';
-            document.getElementById('klanten_registratie_form').style.display = 'none';
-            document.getElementById('voertuigen_registratie_form').style.display = 'block';
-        }
     </script>
 </body>
 
