@@ -1,3 +1,7 @@
+<?php
+require "../../database/dbh.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,6 +28,267 @@
 </head>
 
 <body style="background: #e5e5e5">
+
+    <!-- MODALS -->
+    <!-- REPARATIE MODAL -->
+    <!-- zet alle inhoud van die verschillende steps van je registratie modal in divs met ids -->
+    <div id="klant_kiezen_modal" class="modal" style="height: 600px; width: 1000px;">
+        <div class="modal-content">
+            <!-- Klant kiezen -->
+            <form class="col s12" action="" method="post" id="klant_kiezen_form">
+                <h3>Reparatie</h3>
+                <br>
+                <h5>Klant Kiezen</h5>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <select name="klant" id="klant" required>
+                            <?php
+                            $sql = "SELECT * FROM klant ORDER BY naam ASC";
+                            $result = mysqli_query($link, $sql);
+                            while ($row = mysqli_fetch_array($result)) {
+                                echo "<option value=" . $row['klant_id'] . ">" . $row['naam'] . " " . $row['voornaam'] . "	| " . $row['mobiel'] . "    | " . $row['adres'] . "</option>";
+                            }
+                            ?>
+                        </select>
+                        <label>Klant</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#nieuwe_klant_modal">Nieuwe
+                            Klant</button>
+                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#voertuig_kiezen_modal" type="submit">Volgende</li>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="nieuwe_klant_modal" class="modal" style="height: 600px; width: 1000px;">
+        <div class="modal-content">
+            <!-- Nieuwe Klant -->
+            <form id="nieuwe_klant_form" method="POST" action="../reparatie/addklant.php">
+                <div class="row">
+                    <h5>Klant Registreren</h5>
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <input id="naam" name="naam" type="text" class="validate" required />
+                            <label for="naam">Naam</label>
+                        </div>
+                        <div class="input-field col s5 offset-s1">
+                            <input id="voornaam" name="voornaam" type="text" class="validate" required />
+                            <label for="voornaam">Voornaam</label>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="input-field col s5">
+                            <input id="adres" name="adres" type="text" class="validate" required />
+                            <label for="adres">Adres</label>
+                        </div>
+                        <div class="input-field col s5 offset-s1">
+                            <input id="mobiel" name="mobiel" type="number" class="validate" />
+                            <label for="mobiel">Mobiel</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <button class="blue darken-4 waves-effect waves-light btn" type="submit">Opslaan</button>
+                            <a href="#!" class="modal-action modal-close waves-effect waves-red btn red lighten-1">Close</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="voertuig_kiezen_modal" class="modal" style="height: 600px; width: 1000px;">
+        <div class="modal-content">
+            <!-- voertuig kiezen -->
+            <form class="col s12" action="" method="post" id="voertuig_kiezen_form">
+                <h3>Reparatie</h3>
+                <br>
+                <h5>Voertuig Kiezen</h5>
+                <div class="row">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <select name="voertuig" required>
+                                <option value disabled selected>kies een voertuig</option>
+                                <?php
+
+
+                                $sql = "SELECT * FROM voertuig ORDER BY merk ASC";
+                                $result = mysqli_query($link, $sql);
+
+                                while ($row = mysqli_fetch_array($result)) {
+                                    echo "<option value=" . $row['klant_id'] . ">" . $row['naam'] . " " . $row['voornaam'] . "	| " . $row['mobiel'] . "    | " . $row['adres'] . "</option>";
+                                }
+                                ?>
+                            </select>
+
+                            <label>Voertuig</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <h6 class="input-field col s6">
+                            <?php
+                            $klant = mysqli_fetch_array($_POST['klant']);
+                            // $klant = $_POST['klant'];
+                            // $klant= mysqli_real_escape_string($link, $klant);
+                            echo $klant;
+                            ?>
+                        </h6>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger modal-close" href="#klant_kiezen_modal">Terug</button>
+
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#nieuw_voertuig_modal">Nieuw
+                            Voertuig</button>
+
+                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#reparatie_beschrijving_modal" type="submit">Volgende
+                        </li>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="nieuw_voertuig_modal" class="modal" style="height: 600px; width: 1000px;">
+        <div class="modal-content">
+            <!-- Nieuw Voertuig -->
+            <form id="voertuigen_registratie_form" method="POST" action="../reparatie/addvoertuig.php">
+                <div class="row">
+                    <h5>Voertuig Registreren</h5>
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <input id="merk" name="merk" type="text" class="validate" required />
+                            <label for="merk">Merk</label>
+                        </div>
+                        <div class="input-field col s5 offset-s1">
+                            <input id="model" name="model" type="text" class="validate" required />
+                            <label for="model">Model</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <input id="categorie" name="categorie" type="text" class="validate" />
+                            <label for="categorie">Categorie</label>
+                        </div>
+                        <div class="input-field col s5 offset-s1">
+                            <input id="bouwjaar" name="bouwjaar" type="text" class="validate" required />
+                            <label for="bouwjaar">Bouwjaar</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <input id="kenteken_nr" name="kenteken_nr" type="text" class="validate" />
+                            <label for="kenteken_nr">Kentekennummer</label>
+                        </div>
+                        <div class="input-field col s5 offset-s1">
+                            <input id="chassis_nr" name="chassis_nr" type="text" class="validate" />
+                            <label for="chassis_nr">Chassisnummer</label>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <input id="keuring_vervaldatum" name="keuring_vervaldatum" type="text" class="datepicker validate" />
+                            <label for="keuring_vervaldatum">Keuring Vervaldatum</label>
+                        </div>
+                        <!-- 
+                        <div class="input-field col s6">
+                            <input name="nieuw-keuring" type="text" class="datepicker" required>
+                            <label for="nieuw-keuring">Nieuw keuring vervaldatum</label>
+                        </div> -->
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <button class="blue darken-4 waves-effect waves-light btn" type="submit">Opslaan</button>
+                            <button class="blue darken-4 waves-effect waves-light btn" type="submit" onclick="open_voertuig_kiezen_form()">Doorgaan
+                                met reparatie</button>
+
+                            <a href="#!" class="modal-action modal-close waves-effect waves-red btn red lighten-1">Afsluiten</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="reparatie_beschrijving_modal" class="modal" style="height: 600px; width: 1000px;">
+        <div class="modal-content">
+            <!-- Reparatie registreren -->
+            <form class="col s12" action="" method="post" id="reparatie_beschrijving_form">
+                <h3>Reparatie</h3>
+                <br>
+                <h5>Reparatie Registreren</h5>
+                <div class="row">
+
+                    <div class="input-field col s5">
+                        <p>Klantid</p>
+                        <input id="klantid" name="klantid" type="text" class="validate" readonly />
+
+                    </div>
+
+                    <div class="input-field col s5 offset-s1">
+                        <p>Kentekennummer</p>
+                        <input id="kentekennummer" name="kentekennummer" type="text" class="validate" readonly />
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="input-field col s10">
+
+                        <input id="omschrijving" name="omschrijving" type="text" class="validate" required />
+                        <label for="omschrijving">Omschrijving</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s5">
+
+                        <input id="prijs" name="prijs" type="number" class="validate" required />
+                        <label for="prijs">Prijs</label>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger modal-close" href="#voertuig_kiezen_modal">Terug</button>
+                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#!" type="submit">
+                            Opslaan
+                        </li>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- END MODALS -->
+
+
+
+
+
+
+
+
+
+
     <div class="row">
         <nav class="z-depth-0 header">
             <div class="nav-wrapper">
@@ -202,19 +467,14 @@
                         <i class="large material-icons">add</i>
                     </a>
                     <ul>
-                        <li><a class="btn-floating red tooltipped" data-position="left" data-tooltip="Wegslepen">
-                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M7.77826 8.23649C7.04354 8.40992 5.7885 8.83905 5.3261 9.07873C4.83074 9.33473 3.84002 10.1766 3.44386 10.6803C2.88258 11.3987 2.83298 11.44 2.42018 11.4976C1.8589 11.5885 1.14882 11.8445 0.834903 12.0838C0.438743 12.3894 0.273623 12.9011 0.331223 13.6358C0.372503 14.1808 0.578903 14.9651 0.719383 15.1219C0.744023 15.1549 1.1901 15.0806 1.69346 14.9568L2.61826 14.7341V14.3459C2.61826 14.1312 2.65954 13.8506 2.70914 13.7184C2.90722 13.1901 3.60898 12.703 4.1869 12.703C4.78146 12.703 5.51618 13.2314 5.64002 13.7434C5.67298 13.8506 5.74722 13.9414 5.82978 13.9331C5.90402 13.9331 7.67106 13.512 9.7597 13.0083L13.5575 12.0755L13.5328 11.7453C13.4832 11.0848 13.9127 10.4243 14.5648 10.1766C15.2912 9.896 16.1501 10.2262 16.4967 10.9114C16.5959 11.1014 16.6784 11.2666 16.6947 11.2829C16.7031 11.2912 17.0663 11.217 17.5037 11.1178L18.3047 10.9443V10.5398C18.3047 9.83808 17.9331 9.2272 17.3139 8.90528C16.5709 8.52544 15.0931 8.48417 13.5575 8.8144L12.8144 8.97121L12.3437 8.77313C10.8 8.12929 9.0829 7.93089 7.77826 8.23649ZM10.4122 8.74848C10.7095 8.83936 11.048 8.99616 11.1719 9.09504L11.3866 9.28513L9.71842 9.68128C8.80194 9.896 8.03426 10.0611 8.0093 10.0362C7.94338 9.96192 7.6461 8.72353 7.68738 8.68224C7.70402 8.6576 7.92674 8.608 8.16642 8.57504C8.78562 8.47585 9.78466 8.55008 10.4122 8.74848ZM7.3821 9.49984C7.47298 9.87968 7.52258 10.1933 7.49762 10.2016C7.46466 10.2182 6.7133 10.408 5.82146 10.631C4.64898 10.9117 4.1869 11.0026 4.1869 10.9283C4.1869 10.7466 4.81442 10.0202 5.22722 9.71456C5.65666 9.40097 6.18498 9.12032 6.65538 8.94688C7.19202 8.74848 7.21698 8.75648 7.3821 9.49984Z" fill="white" />
-                                    <path d="M18.8829 10.3914V11.96H18.2224H17.5703L14.5732 14.0653L11.576 16.1706H6.23428H0.884521V17.632V19.1014L2.2714 19.1261C4.75652 19.1674 7.737 19.3654 8.16644 19.5142C8.95909 19.7949 9.66917 20.6784 9.79301 21.5286L9.84261 21.9085L14.8212 21.9331L19.7914 21.9498V19.1014V16.2531H17.0503C14.4909 16.2448 13.4589 16.2202 13.3847 16.1539C13.368 16.1376 14.3754 15.4109 15.6221 14.5357L17.8925 12.9504H18.3879H18.8832V13.6112V14.2717H19.3373H19.7914V11.5472V8.82272H19.3373H18.8832V10.3914H18.8829Z" fill="white" />
-                                    <path d="M20.6992 15.3862V21.9498H21.5168H22.3258L22.3754 21.5453C22.4992 20.5296 23.2669 19.696 24.3405 19.4234C25.7853 19.0518 27.288 20.0838 27.5191 21.5949L27.5687 21.9498H29.6243H31.68V21.1654V20.3811H31.2672H30.8544V19.473V18.5648H31.2672H31.68V17.5494V16.5341L30.8461 15.1306C29.7645 13.3309 28.8067 11.927 28.1875 11.2582L27.7005 10.7216H25.7687H23.8448L23.5559 10.2758C23.1101 9.5824 22.433 9.15296 21.4506 8.93824C21.1533 8.88032 20.856 8.82272 20.8067 8.82272C20.7242 8.82272 20.6992 10.1933 20.6992 15.3862ZM28.9802 13.8176C29.7895 15.023 30.4416 16.0221 30.4416 16.0467C30.4416 16.0714 29.4592 16.088 28.2538 16.088H26.0659V13.8589V11.6298H26.7923H27.5271L28.9802 13.8176Z" fill="white" />
-                                    <path d="M14.5485 10.4243C13.7725 10.7629 13.5248 11.8112 14.0698 12.4554C14.3587 12.8102 14.6806 12.9507 15.1514 12.9507C15.8944 12.9507 16.4394 12.3811 16.431 11.6214C16.4144 10.6637 15.4317 10.0365 14.5485 10.4243ZM15.4979 10.928C15.985 11.184 16.0675 11.8115 15.6714 12.216C15.3411 12.5462 14.9366 12.5462 14.5731 12.216C14.3501 12.0179 14.3008 11.9187 14.3008 11.6298C14.3008 11.3408 14.3504 11.2416 14.5731 11.0435C14.8704 10.7795 15.1427 10.7462 15.4979 10.928Z" fill="white" />
-                                    <path d="M3.69157 13.0416C3.17957 13.2563 2.86597 13.7434 2.86597 14.3376C2.86597 15.0806 3.43557 15.6256 4.19525 15.6173C5.50789 15.601 5.97861 13.9661 4.91365 13.1734C4.65765 12.9837 3.99717 12.9094 3.69157 13.0416ZM4.74021 13.7104C4.99621 13.9498 5.06213 14.3542 4.89701 14.6682C4.73189 14.9821 4.53381 15.0976 4.14565 15.0976C3.49349 15.0976 3.13829 14.3379 3.53477 13.8262C3.86501 13.4048 4.36869 13.3635 4.74021 13.7104Z" fill="white" />
-                                    <path d="M6.74624 20.0429C5.82143 20.3402 5.30975 21.0253 5.30975 21.9501C5.30975 23.7088 7.36544 24.559 8.60384 23.3123C9.55328 22.3629 9.31392 20.8189 8.1168 20.1997C7.76192 20.0182 7.05984 19.9357 6.74624 20.0429ZM7.88576 21.24C8.1584 21.496 8.19136 21.5619 8.19136 21.9418C8.19136 22.305 8.1584 22.3958 7.91904 22.6269C7.68768 22.8662 7.59712 22.8992 7.2336 22.8992C6.85376 22.8992 6.78784 22.8662 6.53183 22.5936C5.92095 21.9248 6.35007 20.9754 7.26656 20.959C7.50592 20.9594 7.64608 21.0253 7.88576 21.24Z" fill="white" />
-                                    <path d="M24.2989 20.0842C22.8871 20.6125 22.5239 22.495 23.6551 23.4362C25.0173 24.5674 27.0733 23.4528 26.8669 21.7024C26.809 21.2154 26.6605 20.9098 26.3056 20.5632C25.777 20.0429 24.9431 19.8448 24.2989 20.0842ZM25.4055 21.0832C25.8429 21.3142 26.033 21.983 25.7853 22.4288C25.6368 22.7014 25.2404 22.9408 24.9514 22.9408C24.5965 22.9408 24.1754 22.6518 24.0349 22.3216C23.8781 21.9334 23.8861 21.7766 24.1092 21.4464C24.4311 20.9677 24.9181 20.8355 25.4055 21.0832Z" fill="white" />
-                                </svg>
-                            </a></li>
-                        <li><a class="btn-floating blue darken-4 tooltipped" data-position="left" data-tooltip="Keuring"><i class="material-icons">directions_car</i></a></li>
-                        <li><a class="btn-floating yellow darken-1 tooltipped" data-position="left" data-tooltip="Reparatie"><i class="material-icons">build</i></a></li>
+                        <li><a class="btn-floating red darken-1 modal-trigger tooltipped" href="#modal_wegsleep" data-position="left" data-tooltip="Wegsleep">
+                                <i class="material-icons">
+                                    <img src="../../media/tow-truck.png" style="height: 18px; width: 26px;">
+                                </i>
+                            </a>
+                        </li>
+                        <li><a class="btn-floating blue darken-4 modal-trigger tooltipped" data-position="left" data-tooltip="Keuring"><i class="material-icons">directions_car</i></a></li>
+                        <li><a class="btn-floating yellow darken-1 modal-trigger tooltipped" href="#klant_kiezen_modal" data-position="left" data-tooltip="Reparatie"><i class="material-icons">build</i></a></li>
                     </ul>
                 </div>
 
