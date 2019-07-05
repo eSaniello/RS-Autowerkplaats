@@ -135,10 +135,10 @@ require "../../database/dbh.php";
                     <div class="row">
                         <h6 class="input-field col s6">
                             <?php
-                            $klant = mysqli_fetch_array($_POST['klant']);
+                            // $klant = mysqli_fetch_array($_POST['klant']);
                             // $klant = $_POST['klant'];
                             // $klant= mysqli_real_escape_string($link, $klant);
-                            echo $klant;
+                            // echo $klant;
                             ?>
                         </h6>
 
