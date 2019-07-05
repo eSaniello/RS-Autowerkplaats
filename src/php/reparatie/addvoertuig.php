@@ -35,7 +35,7 @@ VALUES (
 )";
 
 if ($link->query($sql) === TRUE) {
-    header("Location: ../index.php");
+    header("Location: ../dashboard/dashboard.php");
     echo "New record created successfully";
 } else {
     echo "Error: " . $sql . "<br>" . $link->error;

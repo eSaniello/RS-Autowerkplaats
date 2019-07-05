@@ -28,8 +28,8 @@ require "../../database/dbh.php";
 </head>
 
 <body style="background: #e5e5e5">
-
     <!-- MODALS -->
+
     <!-- REPARATIE MODAL -->
     <!-- zet alle inhoud van die verschillende steps van je registratie modal in divs met ids -->
     <div id="klant_kiezen_modal" class="modal" style="height: 600px; width: 1000px;">
@@ -278,13 +278,105 @@ require "../../database/dbh.php";
         </div>
     </div>
 
+
+    <!-- KEURING MODAL -->
+    <div id="modal_keuring" class="modal" style="height: 600px; width: 1000px;">
+        <div class="modal-content">
+            <h3>Keuring Verlengen</h3>
+            <br><br>
+            <div class="row">
+                <form class="col s12" action="../keuring/keuring.php" method="post">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <select name="voertuig" required>
+                                <?php
+                                $date = date('y-m-d');
+                                $sql = "SELECT * FROM voertuig WHERE keuring_vervaldatum <= '$date' ORDER BY kenteken_nr ASC";
+                                $result = mysqli_query($link, $sql);
+
+                                while ($row = mysqli_fetch_array($result)) {
+                                    echo "<option value=" . $row['voertuig_id'] . ">" . $row['merk'] . " " . $row['model'] . "	| " . $row['kenteken_nr'] . "    | " . $row['categorie'] . "</option>";
+                                }
+                                ?>
+                            </select>
+                            <label>Voertuig</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input name="nieuw-keuring" type="text" class="datepicker" required>
+                            <label for="nieuw-keuring">Nieuw keuring vervaldatum</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#modal1">Voertuig registreren</button>
+                            <button class="blue darken-4 waves-effect waves-light btn" name="submit">Opslaan</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <table class="tarief">
+                    <thead>
+                        <th> </th>
+                        <th>P1</th>
+                        <th>P2</th>
+                        <th>P3</th>
+                        <th>P4</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tarief</td>
+                            <td>SRD 50</td>
+                            <td>SRD 100</td>
+                            <td>SRD 150</td>
+                            <td>SRD 200</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- WEGSLEPEN MODAL -->
+    <div id="modal_wegsleep" class="modal" style="height: 600px; width: 1000px;">
+        <div class="modal-content">
+            <h3>Wegslepen</h3>
+            <br><br>
+            <div class="row">
+                <form class="col s12" action="../wegslepen/wegslepen.php" method="post">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" name="merk" required>
+                            <label for="merk">Merk</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" name="model" required>
+                            <label for="model">Model</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="kentekennummer">Kentekennummer</label>
+                            <input type="text" name="kentekennummer">
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="number" name="afstand" required>
+                            <label for="afstand">Afstand (Km)</label>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <button class="blue darken-4 waves-effect waves-light btn" name="submit">Opslaan</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <!-- END MODALS -->
-
-
-
-
-
-
 
 
 
@@ -473,7 +565,7 @@ require "../../database/dbh.php";
                                 </i>
                             </a>
                         </li>
-                        <li><a class="btn-floating blue darken-4 modal-trigger tooltipped" data-position="left" data-tooltip="Keuring"><i class="material-icons">directions_car</i></a></li>
+                        <li><a class="btn-floating blue darken-4 modal-trigger tooltipped" href="#modal_keuring" data-position="left" data-tooltip="Keuring"><i class="material-icons">directions_car</i></a></li>
                         <li><a class="btn-floating yellow darken-1 modal-trigger tooltipped" href="#klant_kiezen_modal" data-position="left" data-tooltip="Reparatie"><i class="material-icons">build</i></a></li>
                     </ul>
                 </div>
