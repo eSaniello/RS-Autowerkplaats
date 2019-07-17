@@ -9,8 +9,7 @@ session_start();
     <title>Autowerkplaats</title>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Anton|Merriweather|Open+Sans+Condensed:300|Roboto+Condensed"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Anton|Merriweather|Open+Sans+Condensed:300|Roboto+Condensed" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="lib/materialize/css/materialize.css" media="screen,projection" />
     <!--Let browser know website is optimized for mobile-->
@@ -34,12 +33,12 @@ session_start();
                     <div class="input-field col s6">
                         <select name="klant" id="klant" required>
                             <?php
-				                    $sql = "SELECT * FROM klant ORDER BY naam ASC";
-				                    $result = mysqli_query($link, $sql);
-				                    while($row = mysqli_fetch_array($result)) {
-				                    	echo "<option value=". $row['klant_id'] . ">" . $row['naam'] . " " . $row['voornaam'] . "	| " . $row['mobiel'] . "    | " . $row['adres'] . "</option>";
-				                    }
-			                    ?>
+                            $sql = "SELECT * FROM klant ORDER BY naam ASC";
+                            $result = mysqli_query($link, $sql);
+                            while ($row = mysqli_fetch_array($result)) {
+                                echo "<option value=" . $row['klant_id'] . ">" . $row['naam'] . " " . $row['voornaam'] . "	| " . $row['mobiel'] . "    | " . $row['adres'] . "</option>";
+                            }
+                            ?>
                         </select>
 
 
@@ -49,11 +48,9 @@ session_start();
 
                 <div class="row">
                     <div class="input-field col s6">
-                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger"
-                            href="#nieuwe_klant_modal">Nieuwe
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#nieuwe_klant_modal">Nieuwe
                             Klant</button>
-                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger"
-                            href="#voertuig_kiezen_modal" type="submit">Volgende</li>
+                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#voertuig_kiezen_modal" type="submit">Volgende</li>
                     </div>
                 </div>
             </form>
@@ -91,8 +88,7 @@ session_start();
                     <div class="row">
                         <div class="input-field col s6">
                             <button class="blue darken-4 waves-effect waves-light btn" type="submit">Opslaan</button>
-                            <a href="#!"
-                                class="modal-action modal-close waves-effect waves-red btn red lighten-1">Close</a>
+                            <a href="#!" class="modal-action modal-close waves-effect waves-red btn red lighten-1">Close</a>
                         </div>
                     </div>
                 </div>
@@ -113,15 +109,15 @@ session_start();
                             <select name="voertuig" required>
                                 <option value disabled selected>kies een voertuig</option>
                                 <?php
-                                    
 
-				                    $sql = "SELECT * FROM voertuig ORDER BY merk ASC";
-				                    $result = mysqli_query($link, $sql);
 
-				                    while($row = mysqli_fetch_array($result)) {
-				                    	echo "<option value=". $row['klant_id'] . ">" . $row['naam'] . " " . $row['voornaam'] . "	| " . $row['mobiel'] . "    | " . $row['adres'] . "</option>";
-				                    }
-			                    ?>
+                                $sql = "SELECT * FROM voertuig ORDER BY merk ASC";
+                                $result = mysqli_query($link, $sql);
+
+                                while ($row = mysqli_fetch_array($result)) {
+                                    echo "<option value=" . $row['klant_id'] . ">" . $row['naam'] . " " . $row['voornaam'] . "	| " . $row['mobiel'] . "    | " . $row['adres'] . "</option>";
+                                }
+                                ?>
                             </select>
 
                             <label>Voertuig</label>
@@ -130,8 +126,8 @@ session_start();
 
                     <div class="row">
                         <h6 class="input-field col s6">
-                            <?php 
-                            $klant= mysqli_fetch_array($_POST['klant']);
+                            <?php
+                            $klant = mysqli_fetch_array($_POST['klant']);
                             // $klant = $_POST['klant'];
                             // $klant= mysqli_real_escape_string($link, $klant);
                             echo $klant;
@@ -143,15 +139,12 @@ session_start();
 
                 <div class="row">
                     <div class="input-field col s6">
-                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger modal-close"
-                            href="#klant_kiezen_modal">Terug</button>
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger modal-close" href="#klant_kiezen_modal">Terug</button>
 
-                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger"
-                            href="#nieuw_voertuig_modal">Nieuw
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#nieuw_voertuig_modal">Nieuw
                             Voertuig</button>
 
-                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger"
-                            href="#reparatie_beschrijving_modal" type="submit">Volgende
+                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#reparatie_beschrijving_modal" type="submit">Volgende
                         </li>
                     </div>
                 </div>
@@ -199,8 +192,7 @@ session_start();
 
                     <div class="row">
                         <div class="input-field col s5">
-                            <input id="keuring_vervaldatum" name="keuring_vervaldatum" type="text"
-                                class="datepicker validate" />
+                            <input id="keuring_vervaldatum" name="keuring_vervaldatum" type="text" class="datepicker validate" />
                             <label for="keuring_vervaldatum">Keuring Vervaldatum</label>
                         </div>
                         <!-- 
@@ -215,12 +207,10 @@ session_start();
                     <div class="row">
                         <div class="input-field col s6">
                             <button class="blue darken-4 waves-effect waves-light btn" type="submit">Opslaan</button>
-                            <button class="blue darken-4 waves-effect waves-light btn" type="submit"
-                                onclick="open_voertuig_kiezen_form()">Doorgaan
+                            <button class="blue darken-4 waves-effect waves-light btn" type="submit" onclick="open_voertuig_kiezen_form()">Doorgaan
                                 met reparatie</button>
 
-                            <a href="#!"
-                                class="modal-action modal-close waves-effect waves-red btn red lighten-1">Afsluiten</a>
+                            <a href="#!" class="modal-action modal-close waves-effect waves-red btn red lighten-1">Afsluiten</a>
                         </div>
                     </div>
                 </div>
@@ -270,8 +260,7 @@ session_start();
 
                 <div class="row">
                     <div class="input-field col s6">
-                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger modal-close"
-                            href="#voertuig_kiezen_modal">Terug</button>
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger modal-close" href="#voertuig_kiezen_modal">Terug</button>
                         <li class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#!" type="submit">
                             Opslaan
                         </li>
@@ -293,13 +282,9 @@ session_start();
             <i class="large material-icons">add</i>
         </a>
         <ul>
-            <li><a class="btn-floating red darken-1 modal-trigger" href="#modal_wegsleep"><i class="material-icons"><i
-                            class="material-icons"><img src="img/tow-truck.png"
-                                style="height: 18px; width: 26px;"></i></a></li>
-            <li><a class="btn-floating blue darken-4 modal-trigger" href="#modal2"><i class="material-icons"><img
-                            src="img/car-icon.png" style="height: 24px; width: 24px;"></i></a></li>
-            <li><a class="btn-floating yellow darken-2 modal-trigger" href="#klant_kiezen_modal"><i
-                        class="material-icons"><img src="img/wrench.png" style="height: 24px; width: 24px;"></i></a>
+            <li><a class="btn-floating red darken-1 modal-trigger" href="#modal_wegsleep"><i class="material-icons"><i class="material-icons"><img src="img/tow-truck.png" style="height: 18px; width: 26px;"></i></a></li>
+            <li><a class="btn-floating blue darken-4 modal-trigger" href="#modal2"><i class="material-icons"><img src="img/car-icon.png" style="height: 24px; width: 24px;"></i></a></li>
+            <li><a class="btn-floating yellow darken-2 modal-trigger" href="#klant_kiezen_modal"><i class="material-icons"><img src="img/wrench.png" style="height: 24px; width: 24px;"></i></a>
             </li>
         </ul>
     </div>
@@ -315,14 +300,14 @@ session_start();
                         <div class="input-field col s6">
                             <select name="klanten" required>
                                 <?php
-				                    include '../incl/db.php';
-				                    $sql = "SELECT * FROM voertuigen ORDER BY plaatnummer ASC";
-				                    $result = mysqli_query($link, $sql);
+                                include '../incl/db.php';
+                                $sql = "SELECT * FROM voertuigen ORDER BY plaatnummer ASC";
+                                $result = mysqli_query($link, $sql);
 
-				                    while($row = mysqli_fetch_array($result)) {
-				                    	echo "<option value=". $row['voertuig_id'] . ">" . $row['merk'] . " " . $row['model'] . "	| " . $row['plaatnummer'] . "</option>";
-				                    }
-			                    ?>
+                                while ($row = mysqli_fetch_array($result)) {
+                                    echo "<option value=" . $row['voertuig_id'] . ">" . $row['merk'] . " " . $row['model'] . "	| " . $row['plaatnummer'] . "</option>";
+                                }
+                                ?>
                             </select>
                             <label>Voertuig</label>
                         </div>
@@ -339,8 +324,7 @@ session_start();
                     </div>
                     <div class="row">
                         <div class="input-field col s6">
-                            <button class="blue darken-4 waves-effect waves-light btn modal-trigger"
-                                href="#modal1">Voertuig registreren</button>
+                            <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#modal1">Voertuig registreren</button>
                             <button class="blue darken-4 waves-effect waves-light btn" type="submit">Opslaan</button>
                         </div>
                     </div>
@@ -353,7 +337,7 @@ session_start();
     <script type="text/javascript">
         M.AutoInit();
 
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.fixed-action-btn');
             var instances = M.FloatingActionButton.init(elems, {
                 direction: 'top',
