@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
 require_once "incl/config.php";
+session_start();
 ?>
 <html>
 
@@ -40,6 +41,8 @@ require_once "incl/config.php";
 				                    }
 			                    ?>
                         </select>
+
+
                         <label>Klant</label>
                     </div>
                 </div>
