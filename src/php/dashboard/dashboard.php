@@ -1,5 +1,7 @@
 <?php
 require "../../database/dbh.php";
+
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +46,7 @@ require "../../database/dbh.php";
                 <h5>Klant Kiezen</h5>
                 <div class="row">
                     <div class="input-field col s6">
-                        <select name="klant" id="klant" required>
+                        <select name="klant" id="klant" class="klant_id" required>
                             <?php
                             $sql = "SELECT * FROM klant ORDER BY naam ASC";
                             $result = mysqli_query($conn, $sql);
@@ -61,7 +63,7 @@ require "../../database/dbh.php";
                     <div class="input-field col s6">
                         <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#nieuwe_klant_modal">Nieuwe
                             Klant</button>
-                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#voertuig_kiezen_modal" type="submit">Volgende</li>
+                        <li id="klant_session" class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#voertuig_kiezen_modal" type="submit">Volgende</li>
                     </div>
                 </div>
             </form>
@@ -295,7 +297,7 @@ require "../../database/dbh.php";
                                 <?php
                                 $date = date('y-m-d');
                                 $sql = "SELECT * FROM voertuig WHERE keuring_vervaldatum <= '$date' ORDER BY kenteken_nr ASC";
-                                $result = mysqli_query($link, $sql);
+                                $result = mysqli_query($conn, $sql);
 
                                 while ($row = mysqli_fetch_array($result)) {
                                     echo "<option value=" . $row['voertuig_id'] . ">" . $row['merk'] . " " . $row['model'] . "	| " . $row['kenteken_nr'] . "    | " . $row['categorie'] . "</option>";
@@ -311,7 +313,7 @@ require "../../database/dbh.php";
                     </div>
                     <div class="row">
                         <div class="input-field col s6">
-                            <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#modal1">Voertuig registreren</button>
+                            <!-- <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#voertuig_kiezen_modal">Voertuig registreren</button> -->
                             <button class="blue darken-4 waves-effect waves-light btn" name="submit">Opslaan</button>
                         </div>
                     </div>
@@ -460,9 +462,49 @@ require "../../database/dbh.php";
                             </div>
                         </nav>
 
+                        <!-- TABELLEN -->
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="card white">
+                                    <div class="card-content">
+                                        <span class="card-title">Reparaties</span>
+                                        <table class="tarief">
+                                            <thead>
+                                                <th>Merk</th>
+                                                <th>Model</th>
+                                                <th>Bouwjaar</th>
+                                                <th>Kenteken nr.</th>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $reparatieQuery = mysqli_query($conn, "SELECT merk, model, bouwjaar, kenteken_nr from voertuig ORDER BY model ASC");
+                                                while ($row = mysqli_fetch_array($reparatieQuery)) {
+                                                    echo "<tr>";
+                                                    echo "<td>" . $row['merk'] . "</td>";
+                                                    echo "<td>" . $row['model'] . "</td>";
+                                                    echo "<td>" . $row['bouwjaar'] . "</td>";
+                                                    echo "<td>" . $row['kenteken_nr'] . "</td>";
+                                                    echo "</tr>";
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END TABELLEN -->
+
                         <!-- CHART -->
-                        <div class="chart-container" style="position: relative; height:40vh; width:60vw">
-                            <canvas id="myChart"></canvas>
+                        <div class="col s12">
+                            <div class="card white" style="position: relative; height:65vh; width: 59vw">
+                                <div class="card-content">
+                                    <span class="card-title">Reparaties</span>
+                                    <div class="chart-container" style="position: relative; height:20vh; width:55vw">
+                                        <canvas id="myChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <script>
                             var ctx = document.getElementById('myChart').getContext('2d');
@@ -600,6 +642,9 @@ require "../../database/dbh.php";
         </div>
     </div>
 
+    <?php
+    echo $_SESSION['klant_id'];
+    ?>
 
     <script src="../../js/tabs.js"></script>
 
@@ -642,6 +687,30 @@ require "../../database/dbh.php";
                 } else {
                     $('.tab_text_keuring').css('color', '#676767');
                 }
+            });
+        });
+
+
+        $(document).ready(function() {
+            $(document).on('click', '#klant_session', function() {
+                alert('est123');
+                //e.preventDefault();
+                //var data = $(this).serialize();
+
+                let id = $(".klant_id :selected").val();
+                $.ajax({
+                    type: 'POST',
+                    url: '../reparatie/klant_session.php',
+                    data: ({
+                        klant_id: id
+                    }),
+                    cache: false,
+                    success: function(data) {
+
+                        // $('#results').html(data);
+                    }
+                })
+                return false;
             });
         });
     </script>
