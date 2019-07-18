@@ -12,7 +12,7 @@ date_default_timezone_set('America/Belem');
 		$insert_voertuig = mysqli_query($link, "INSERT INTO voertuig (merk, model, kenteken_nr) VALUES ('$merk', '$model', '$kentekennummer');");
 
 		//VOOR TABEL WEGSLEEP
-		$afstand = mysqli_real_escape_string($link, $_POST["afstand"]);
+		$afstand = $_POST["afstand"];
 		$date = date('y-m-d H:i:s');
 		$status = "binnen";
 		$gebruikersid = "1";
@@ -22,7 +22,7 @@ date_default_timezone_set('America/Belem');
 		$voertuigid = $voertuig_result['voertuig_id'];
 
 		$insert_wegsleep = mysqli_query($link, "INSERT INTO wegsleep (voertuig_id, gebruikers_id, wegsleep_datum, voertuig_status, afstand_km) VALUES ('$voertuigid', '$gebruikersid', '$date', '$status', '$afstand');");
-
+		
 		header('Location: ../index.php');
 
 	}
