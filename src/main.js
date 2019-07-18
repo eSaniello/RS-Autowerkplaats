@@ -1,8 +1,11 @@
+var klant;
+
 function setKlant() {
-    let klant = window.document.getElementById('klant');
+    const tmp = document.getElementById('klant');
+    klant = tmp.options[tmp.selectedIndex].value;
     console.log(klant);
 }
 
-function getKlant() {
-
+function setKlantId() {
+    klant ? document.getElementById('selectedKlantId').value = klant : '';
 }

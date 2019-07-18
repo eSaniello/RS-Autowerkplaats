@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <?php
 require_once "incl/config.php";
+
+   
 ?>
 <html>
 
@@ -24,13 +26,14 @@ require_once "incl/config.php";
     <div id="klant_kiezen_modal" class="modal" style="height: 600px; width: 1000px;">
         <div class="modal-content">
             <!-- Klant kiezen -->
-            <form class="col s12" action="" method="post" id="klant_kiezen_form">
+            <form class="col s12" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="GET" id="klant_kiezen_form">
                 <h3>Reparatie</h3>
                 <br>
                 <h5>Klant Kiezen</h5>
                 <div class="row">
                     <div class="input-field col s6">
-                        <select name="klant" id="klant" required>
+                        <select name="klant" id="klant" required onchange="setKlant()">
+                            <!-- <option disabled>Selecteer een klant</option> -->
                             <?php
                             $sql = "SELECT * FROM klant ORDER BY naam ASC";
                             $result = mysqli_query($link, $sql);
@@ -41,13 +44,14 @@ require_once "incl/config.php";
                         </select>
                         <label>Klant</label>
                     </div>
+                    
                 </div>
 
                 <div class="row">
                     <div class="input-field col s6">
                         <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#nieuwe_klant_modal">Nieuwe
                             Klant</button>
-                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#voertuig_kiezen_modal" type="submit">Volgende</li>
+                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#voertuig_kiezen_modal" name="submit" type="submit" onclick="setKlantId()">Volgende</li>
                     </div>
                 </div>
             </form>
@@ -96,7 +100,7 @@ require_once "incl/config.php";
     <div id="voertuig_kiezen_modal" class="modal" style="height: 600px; width: 1000px;">
         <div class="modal-content">
             <!-- voertuig kiezen -->
-            <form class="col s12" action="" method="post" id="voertuig_kiezen_form">
+            <form class="col s12" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="voertuig_kiezen_form">
                 <h3>Reparatie</h3>
                 <br>
                 <h5>Voertuig Kiezen</h5>
@@ -123,12 +127,17 @@ require_once "incl/config.php";
 
                     <div class="row">
                         <h6 class="input-field col s6">
+                            <p>
+
+                                
                             <?php
-                            $klant = mysqli_fetch_array($_POST['klant']);
-                            // $klant = $_POST['klant'];
-                            // $klant= mysqli_real_escape_string($link, $klant);
+                            if(isset($_POST["submit"])){
+
+                        //   if($_SERVER["REQUEST_METHOD"] == "POST"){
+                            $klant = mysql_real_escape_string($link, $_POST["klant"]);
                             echo $klant;
-                            ?>
+    }
+                            ?></p>
                         </h6>
 
                     </div>
@@ -141,8 +150,8 @@ require_once "incl/config.php";
                         <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#nieuw_voertuig_modal">Nieuw
                             Voertuig</button>
 
-                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#reparatie_beschrijving_modal" type="submit">Volgende
-                        </li>
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#reparatie_beschrijving_modal">Volgende
+                        </button>
                     </div>
                 </div>
             </form>
@@ -155,6 +164,7 @@ require_once "incl/config.php";
             <form id="voertuigen_registratie_form" method="POST" action="add_registratie/addvoertuig.php">
                 <div class="row">
                     <h5>Voertuig Registreren</h5>
+                    <input id="selectedKlantId" name="selectedKlantId" type="number" class="validate" />
                     <div class="row">
                         <div class="input-field col s5">
                             <input id="merk" name="merk" type="text" class="validate" required />
