@@ -25,6 +25,9 @@ require "../../database/dbh.php";
 
     <!-- Google icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 </head>
 
 <body style="background: #e5e5e5">
@@ -44,7 +47,7 @@ require "../../database/dbh.php";
                         <select name="klant" id="klant" required>
                             <?php
                             $sql = "SELECT * FROM klant ORDER BY naam ASC";
-                            $result = mysqli_query($link, $sql);
+                            $result = mysqli_query($conn, $sql);
                             while ($row = mysqli_fetch_array($result)) {
                                 echo "<option value=" . $row['klant_id'] . ">" . $row['naam'] . " " . $row['voornaam'] . "	| " . $row['mobiel'] . "    | " . $row['adres'] . "</option>";
                             }
@@ -120,10 +123,10 @@ require "../../database/dbh.php";
 
 
                                 $sql = "SELECT * FROM voertuig ORDER BY merk ASC";
-                                $result = mysqli_query($link, $sql);
+                                $result = mysqli_query($conn, $sql);
 
                                 while ($row = mysqli_fetch_array($result)) {
-                                    echo "<option value=" . $row['klant_id'] . ">" . $row['naam'] . " " . $row['voornaam'] . "	| " . $row['mobiel'] . "    | " . $row['adres'] . "</option>";
+                                    echo "<option value=" . $row['voertuig_id'] . ">" . $row['merk'] . " " . $row['model'] . "	| Bouwjaar: " . $row['bouwjaar'] . " | Kenteken nummer: " . $row['kenteken_nr'] . "</option>";
                                 }
                                 ?>
                             </select>
@@ -137,7 +140,7 @@ require "../../database/dbh.php";
                             <?php
                             // $klant = mysqli_fetch_array($_POST['klant']);
                             // $klant = $_POST['klant'];
-                            // $klant= mysqli_real_escape_string($link, $klant);
+                            // $klant = mysqli_real_escape_string($conn, $klant);
                             // echo $klant;
                             ?>
                         </h6>
@@ -456,28 +459,51 @@ require "../../database/dbh.php";
                                 </form>
                             </div>
                         </nav>
-                        <p class="flow-text">
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                            Reparatie tab content gaat hier
-                        </p>
+
+                        <!-- CHART -->
+                        <div class="chart-container" style="position: relative; height:40vh; width:60vw">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                        <script>
+                            var ctx = document.getElementById('myChart').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: [12, 19, 3, 5, 2, 3],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)',
+                                            'rgba(75, 192, 192, 0.2)',
+                                            'rgba(153, 102, 255, 0.2)',
+                                            'rgba(255, 159, 64, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgba(75, 192, 192, 1)',
+                                            'rgba(153, 102, 255, 1)',
+                                            'rgba(255, 159, 64, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                        </script>
+                        <!-- END CHART -->
                     </div>
 
                     <!-- Wegsleep tab content -->
