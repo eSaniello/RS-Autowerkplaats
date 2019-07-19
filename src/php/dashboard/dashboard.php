@@ -637,7 +637,8 @@ session_start();
                                                             echo "<td>" . $origDate . "</td>";
                                                             echo "<td>";
                                                             //check the link
-                                                            echo "<a href='src/php/wegslepen/edit.php?id=" . $row['wegsleep_id'] . "' title='Edit' data-toggle='tooltip'><i class='small material-icons' style='color: #6a1b9a;'>edit</i></a>";
+                                                            echo "<a href='../wegslepen/edit.php?id=" . $row['wegsleep_id'] . "' title='Edit' data-toggle='tooltip'><i class='small material-icons' style='color: #2a1fa2;'>edit</i></a>";
+                                                            echo "<a href='../wegslepen/delete.php?id=" . $row['wegsleep_id'] . "' title='Edit' data-toggle='tooltip'><i class='small material-icons' style='color: #2a1fa2;'>delete</i></a>";
                                                             echo "</td>";
                                                             echo "</tr>";
                                                         }
