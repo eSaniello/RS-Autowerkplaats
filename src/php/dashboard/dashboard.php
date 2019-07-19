@@ -195,7 +195,12 @@ session_start();
                             </div>
                             <div class="row">
                                 <div class="input-field col s5">
-                                    <input id="categorie" name="categorie" type="text" class="validate" />
+                                    <select name="categorie" required>
+                                        <option value="P1">P1</option>
+                                        <option value="P2">P2</option>
+                                        <option value="P3" selected>P3</option>
+                                        <option value="P4">P4</option>
+                                    </select>
                                     <label for="categorie">Categorie</label>
                                 </div>
                                 <div class="input-field col s5 offset-s1">
@@ -410,6 +415,8 @@ session_start();
                     </div>
                 </nav>
 
+                <!-- vanaf hier -->
+                <!-- TABS -->
                 <div class="col s12">
                     <div class="container white _container">
 
@@ -460,7 +467,7 @@ session_start();
                                 </button>
                             </div>
 
-                            <!-- Reparatie tab content -->
+                            <!-- REPARATIE TAB CONTENT -->
                             <div class="tab_panel">
                                 <nav>
                                     <div class="nav-wrapper blue-grey lighten-3">
@@ -510,7 +517,7 @@ session_start();
 
                                 <!-- TABELLEN -->
                                 <div class="row">
-                                    <div class="col s12">
+                                    <div class="col s12" style="height: 35em; overflow: auto;">
                                         <div class="card white">
                                             <div class="card-content">
                                                 <span class="card-title">Reparaties</span>
@@ -594,25 +601,62 @@ session_start();
                                 <!-- END CHART -->
                             </div>
 
-                            <!-- Wegsleep tab content -->
+                            <!-- WEGSLEEP TAB CONTENT -->
                             <div class="tab_panel">
                                 <nav>
                                     <div class="nav-wrapper blue-grey lighten-3">
                                         <form>
                                             <div class="input-field">
-                                                <input id="search" type="search" required>
+                                                <input id="search2" type="search" onkeyup="searchFunction2()" placeholder="Zoeken..." required>
                                                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                                                 <i class="material-icons">close</i>
                                             </div>
                                         </form>
                                     </div>
                                 </nav>
+
+                                <script type="text/javascript">
+                                    function searchFunction2() {
+                                        // Declare variables 
+                                        var input, filter, table, tr, td, i, txtValue;
+                                        //ID VAN JE SEARCHBAR
+                                        input = document.getElementById("search");
+                                        filter = input.value.toUpperCase();
+                                        //ID VAN JE REPARATIE TABEL
+                                        table = document.getElementById("wegsleepTabel");
+                                        tr = table.getElementsByTagName("tr");
+
+                                        // Loop through all table rows, and hide those who don't match the search query
+                                        for (i = 0; i < tr.length; i++) {
+                                            //merk
+                                            td = tr[i].getElementsByTagName("td")[0];
+                                            //model
+                                            td2 = tr[i].getElementsByTagName("td")[1];
+                                            //bouwjaar
+                                            td3 = tr[i].getElementsByTagName("td")[2];
+                                            //kentekennr
+                                            td4 = tr[i].getElementsByTagName("td")[3];
+                                            if (td) {
+                                                txtValue = td.textContent || td.innerText;
+                                                txtValue2 = td2.textContent || td2.innerText;
+                                                txtValue3 = td3.textContent || td3.innerText;
+                                                txtValue4 = td4.textContent || td4.innerText;
+                                                if (txtValue.toUpperCase().indexOf(filter) > -1 || txtValue2.toUpperCase().indexOf(filter) > -1 || txtValue3.toUpperCase().indexOf(filter) > -1 || txtValue4.toUpperCase().indexOf(filter) > -1) {
+                                                    tr[i].style.display = "";
+                                                } else {
+                                                    tr[i].style.display = "none";
+                                                }
+                                            }
+                                        }
+                                    }
+                                </script>
+
                                 <!-- TABBELLEN -->
                                 <div class="row">
-                                    <div class="col s12">
+                                    <div class="col s12" style="height: 35em; overflow: auto;">
                                         <div class="card white">
                                             <div class="card-content">
-                                                <span class="card-title">Reparaties</span>
+                                                <span class="card-title">Wegsleep</span>
                                                 <table class="wegsleepTabel">
                                                     <thead>
                                                         <th>Merk</th>
@@ -653,41 +697,100 @@ session_start();
                                 <!-- END TABELLEN -->
                             </div>
 
-                            <!-- Keuring Tab content -->
+                            <!-- KEURING TAB CONTENT -->
                             <div class="tab_panel">
                                 <nav>
                                     <div class="nav-wrapper blue-grey lighten-3">
                                         <form>
                                             <div class="input-field">
-                                                <input id="search" type="search" required>
+                                                <input id="search3" type="search" onkeyup="searchFunction3()" placeholder="Zoeken..." required>
                                                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                                                 <i class="material-icons">close</i>
                                             </div>
                                         </form>
                                     </div>
                                 </nav>
-                                <p class="flow-text">
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                    Keuring Tab content gaat hier
-                                </p>
+
+                                <script type="text/javascript">
+                                    function searchFunction3() {
+                                        // Declare variables 
+                                        var input, filter, table, tr, td, i, txtValue;
+                                        //ID VAN JE SEARCHBAR
+                                        input = document.getElementById("search");
+                                        filter = input.value.toUpperCase();
+                                        //ID VAN JE REPARATIE TABEL
+                                        table = document.getElementById("keuringTabel");
+                                        tr = table.getElementsByTagName("tr");
+
+                                        // Loop through all table rows, and hide those who don't match the search query
+                                        for (i = 0; i < tr.length; i++) {
+                                            //merk
+                                            td = tr[i].getElementsByTagName("td")[0];
+                                            //model
+                                            td2 = tr[i].getElementsByTagName("td")[1];
+                                            //bouwjaar
+                                            td3 = tr[i].getElementsByTagName("td")[2];
+                                            //kentekennr
+                                            td4 = tr[i].getElementsByTagName("td")[3];
+                                            if (td) {
+                                                txtValue = td.textContent || td.innerText;
+                                                txtValue2 = td2.textContent || td2.innerText;
+                                                txtValue3 = td3.textContent || td3.innerText;
+                                                txtValue4 = td4.textContent || td4.innerText;
+                                                if (txtValue.toUpperCase().indexOf(filter) > -1 || txtValue2.toUpperCase().indexOf(filter) > -1 || txtValue3.toUpperCase().indexOf(filter) > -1 || txtValue4.toUpperCase().indexOf(filter) > -1) {
+                                                    tr[i].style.display = "";
+                                                } else {
+                                                    tr[i].style.display = "none";
+                                                }
+                                            }
+                                        }
+                                    }
+                                </script>
+                                
+                                <!-- TABBELLEN -->
+                                <div class="row">
+                                    <div class="col s12" style="height: 35em; overflow: auto;">
+                                        <div class="card white">
+                                            <div class="card-content">
+                                                <span class="card-title">Keurnig</span>
+                                                <table class="keuringTabel">
+                                                    <thead>
+                                                        <th>Merk</th>
+                                                        <th>Model</th>
+                                                        <th>Kenteken nr.</th>
+                                                        <th>Keuring Vervaldatum</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        $wegsleepQuery = mysqli_query($conn, "SELECT * from keuring INNER JOIN voertuig ON keuring.voertuig_id = voertuig.voertuig_id ORDER BY model ASC");
+
+                                                        while ($row = mysqli_fetch_array($wegsleepQuery)) {
+                                                            echo "<tr>";
+                                                            echo "<td>" . $row['merk'] . "</td>";
+                                                            echo "<td>" . $row['model'] . "</td>";
+                                                            echo "<td>" . $row['kenteken_nr'] . "</td>";
+                                                            "<td>" . $row['keuring_vervaldatum'] . "</td>";
+
+                                                            $kdate = $row['wegsleep_datum'];
+                                                            $origDate = date('d-m-y', strtotime($kdate));
+
+                                                            echo "<td>" . $origDate . "</td>";
+                                                            echo "<td>";
+                                                            //check the link
+                                                            echo "<a href='../wegslepen/edit.php?id=" . $row['wegsleep_id'] . "' title='Edit' data-toggle='tooltip'><i class='small material-icons' style='color: #2a1fa2;'>edit</i></a>";
+                                                            echo "<a href='../wegslepen/delete.php?id=" . $row['wegsleep_id'] . "' title='Edit' data-toggle='tooltip'><i class='small material-icons' style='color: #2a1fa2;'>delete</i></a>";
+                                                            echo "</td>";
+                                                            echo "</tr>";
+                                                        }
+                                                        ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- END TABELLEN -->
                             </div>
                         </div>
 
@@ -709,6 +812,7 @@ session_start();
 
                     </div>
                 </div>
+                <!-- tot hier -->
             </div>
 
             <?php

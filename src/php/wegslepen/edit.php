@@ -5,7 +5,7 @@ $VOERTUIGID = $MODEL = $MERK = $KENTEKENNUMMER = $CHASSISNUMMER = $BOUWJAAR = $C
     $WEGSLEEPDATUM = $KLANTID = $AFHAALDATUM = $PRIJS = $STATUS = $AFSTAND =
     $NAAM = $VOORNAAM = $MOBIEL = $ADRES = "";
 
-if (isset($_POST["id"]) && !empty($_POST["id"])) {
+if (isset($_POST["id"])) {
 
     $wegsleep_id = $_POST["wegsleep_id"];
     $voertuig_id = $_POST["voertuig_id"];
@@ -39,7 +39,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
     header("location: betalen.php");
 } else {
 
-    if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
+    if (isset($_GET["id"])) {
 
         //$id =  trim($_GET["id"]);
 
