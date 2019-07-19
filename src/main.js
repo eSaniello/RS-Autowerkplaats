@@ -8,10 +8,11 @@ function setKlant() {
 
 function setKlantId() {
     klant ? document.getElementById('selectedKlantId').value = klant : '';
+    sessionStorage.klantId = klant;
+
 }
 
 function getKlantId() {
-    const tmp = document.getElementById('klant');
-    klant = tmp.options[tmp.selectedIndex].value;
-    return klant;
+    klantId = sessionStorage.getItem("klantId");
+    return klantId;
 }

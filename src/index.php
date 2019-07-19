@@ -106,7 +106,7 @@ require_once "incl/config.php";
     <div id="voertuig_kiezen_modal" class="modal" style="height: 600px; width: 1000px;">
         <div class="modal-content">
             <!-- voertuig kiezen -->
-            <form class="col s12" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"
+            <form class="col s12" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="GET"
                 id="voertuig_kiezen_form">
                 <h3>Reparatie</h3>
                 <br>
@@ -134,7 +134,6 @@ require_once "incl/config.php";
 
                     <div class="row">
                         <input id="selectedKlantId" name="selectedKlantId" type="number" class="validate" />
-
                     </div>
                 </div>
 
@@ -144,7 +143,7 @@ require_once "incl/config.php";
                             href="#klant_kiezen_modal">Terug</button>
 
                         <button class="blue darken-4 waves-effect waves-light btn modal-trigger"
-                            href="#nieuw_voertuig_modal" onclick="setKlantId()">Nieuw
+                            href="#nieuw_voertuig_modal">Nieuw
                             Voertuig</button>
 
                         <button class="blue darken-4 waves-effect waves-light btn modal-trigger"
@@ -162,7 +161,7 @@ require_once "incl/config.php";
             <form id="voertuigen_registratie_form" method="POST" action="add_registratie/addvoertuig.php">
                 <div class="row">
                     <h5>Voertuig Registreren</h5>
-                    <input id="selectedKlantId" name="selectedKlantId" type="number" class="validate" />
+
                     <div class="row">
                         <div class="input-field col s5">
                             <input id="merk" name="merk" type="text" class="validate" required />
@@ -206,8 +205,11 @@ require_once "incl/config.php";
                     </div>
 
                     <div class="row">
-                        <input id="selectedKlantId" name="selectedKlantId" type="number" class="validate" />
-
+                        <input id="klantId" name="klantId" type="number" class="validate" />
+                        <script>
+                            document.getElementsByName("klantId").innerHTML = sessionStorage.getItem(
+                                "klantId");
+                        </script>
                     </div>
 
                     <div class="row">
@@ -234,8 +236,8 @@ require_once "incl/config.php";
 
                     <div class="input-field col s5">
                         <p>Klantid</p>
-                        <input id="klantid" name="klantid" type="text" class="validate" readonly value="<script type='
-                            text/javascript'> getKlantId(); </script>" />
+                        <input id="selectedKlantId" name="selectedKlantId" type="number" class="validate" />
+
                     </div>
 
                     <div class="input-field col s5 offset-s1">
