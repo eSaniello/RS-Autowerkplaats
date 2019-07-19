@@ -10,7 +10,8 @@ require_once "incl/config.php";
     <title>Autowerkplaats</title>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Anton|Merriweather|Open+Sans+Condensed:300|Roboto+Condensed" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Anton|Merriweather|Open+Sans+Condensed:300|Roboto+Condensed"
+        rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="lib/materialize/css/materialize.css" media="screen,projection" />
     <!--Let browser know website is optimized for mobile-->
@@ -26,7 +27,8 @@ require_once "incl/config.php";
     <div id="klant_kiezen_modal" class="modal" style="height: 600px; width: 1000px;">
         <div class="modal-content">
             <!-- Klant kiezen -->
-            <form class="col s12" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="GET" id="klant_kiezen_form">
+            <form class="col s12" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="GET"
+                id="klant_kiezen_form">
                 <h3>Reparatie</h3>
                 <br>
                 <h5>Klant Kiezen</h5>
@@ -44,14 +46,17 @@ require_once "incl/config.php";
                         </select>
                         <label>Klant</label>
                     </div>
-                    
+
                 </div>
 
                 <div class="row">
                     <div class="input-field col s6">
-                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#nieuwe_klant_modal">Nieuwe
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger"
+                            href="#nieuwe_klant_modal">Nieuwe
                             Klant</button>
-                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#voertuig_kiezen_modal" name="submit" type="submit" onclick="setKlantId()">Volgende</li>
+                        <li class="blue darken-4 waves-effect waves-light btn modal-trigger"
+                            href="#voertuig_kiezen_modal" name="submit" type="submit" onclick="setKlantId()">Volgende
+                        </li>
                     </div>
                 </div>
             </form>
@@ -89,7 +94,8 @@ require_once "incl/config.php";
                     <div class="row">
                         <div class="input-field col s6">
                             <button class="blue darken-4 waves-effect waves-light btn" type="submit">Opslaan</button>
-                            <a href="#!" class="modal-action modal-close waves-effect waves-red btn red lighten-1">Close</a>
+                            <a href="#!"
+                                class="modal-action modal-close waves-effect waves-red btn red lighten-1">Close</a>
                         </div>
                     </div>
                 </div>
@@ -100,7 +106,8 @@ require_once "incl/config.php";
     <div id="voertuig_kiezen_modal" class="modal" style="height: 600px; width: 1000px;">
         <div class="modal-content">
             <!-- voertuig kiezen -->
-            <form class="col s12" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="voertuig_kiezen_form">
+            <form class="col s12" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"
+                id="voertuig_kiezen_form">
                 <h3>Reparatie</h3>
                 <br>
                 <h5>Voertuig Kiezen</h5>
@@ -126,31 +133,22 @@ require_once "incl/config.php";
                     </div>
 
                     <div class="row">
-                        <h6 class="input-field col s6">
-                            <p>
-
-                                
-                            <?php
-                            if(isset($_POST["submit"])){
-
-                        //   if($_SERVER["REQUEST_METHOD"] == "POST"){
-                            $klant = mysql_real_escape_string($link, $_POST["klant"]);
-                            echo $klant;
-    }
-                            ?></p>
-                        </h6>
+                        <input id="selectedKlantId" name="selectedKlantId" type="number" class="validate" />
 
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="input-field col s6">
-                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger modal-close" href="#klant_kiezen_modal">Terug</button>
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger modal-close"
+                            href="#klant_kiezen_modal">Terug</button>
 
-                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#nieuw_voertuig_modal">Nieuw
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger"
+                            href="#nieuw_voertuig_modal" onclick="setKlantId()">Nieuw
                             Voertuig</button>
 
-                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#reparatie_beschrijving_modal">Volgende
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger"
+                            href="#reparatie_beschrijving_modal" onclick="setKlantId()">Volgende
                         </button>
                     </div>
                 </div>
@@ -199,25 +197,24 @@ require_once "incl/config.php";
 
                     <div class="row">
                         <div class="input-field col s5">
-                            <input id="keuring_vervaldatum" name="keuring_vervaldatum" type="text" class="datepicker validate" />
+                            <input id="keuring_vervaldatum" name="keuring_vervaldatum" type="text"
+                                class="datepicker validate" />
                             <label for="keuring_vervaldatum">Keuring Vervaldatum</label>
                         </div>
-                        <!-- 
-                        <div class="input-field col s6">
-                            <input name="nieuw-keuring" type="text" class="datepicker" required>
-                            <label for="nieuw-keuring">Nieuw keuring vervaldatum</label>
-                        </div> -->
+
 
                     </div>
 
+                    <div class="row">
+                        <input id="selectedKlantId" name="selectedKlantId" type="number" class="validate" />
+
+                    </div>
 
                     <div class="row">
                         <div class="input-field col s6">
                             <button class="blue darken-4 waves-effect waves-light btn" type="submit">Opslaan</button>
-                            <button class="blue darken-4 waves-effect waves-light btn" type="submit" onclick="open_voertuig_kiezen_form()">Doorgaan
-                                met reparatie</button>
-
-                            <a href="#!" class="modal-action modal-close waves-effect waves-red btn red lighten-1">Afsluiten</a>
+                            <a href="#!"
+                                class="modal-action modal-close waves-effect waves-red btn red lighten-1">Afsluiten</a>
                         </div>
                     </div>
                 </div>
@@ -237,8 +234,8 @@ require_once "incl/config.php";
 
                     <div class="input-field col s5">
                         <p>Klantid</p>
-                        <input id="klantid" name="klantid" type="text" class="validate" readonly />
-
+                        <input id="klantid" name="klantid" type="text" class="validate" readonly value="<script type='
+                            text/javascript'> getKlantId(); </script>" />
                     </div>
 
                     <div class="input-field col s5 offset-s1">
@@ -267,7 +264,8 @@ require_once "incl/config.php";
 
                 <div class="row">
                     <div class="input-field col s6">
-                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger modal-close" href="#voertuig_kiezen_modal">Terug</button>
+                        <button class="blue darken-4 waves-effect waves-light btn modal-trigger modal-close"
+                            href="#voertuig_kiezen_modal">Terug</button>
                         <li class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#!" type="submit">
                             Opslaan
                         </li>
@@ -289,9 +287,13 @@ require_once "incl/config.php";
             <i class="large material-icons">add</i>
         </a>
         <ul>
-            <li><a class="btn-floating red darken-1 modal-trigger" href="#modal_wegsleep"><i class="material-icons"><i class="material-icons"><img src="img/tow-truck.png" style="height: 18px; width: 26px;"></i></a></li>
-            <li><a class="btn-floating blue darken-4 modal-trigger" href="#modal2"><i class="material-icons"><img src="img/car-icon.png" style="height: 24px; width: 24px;"></i></a></li>
-            <li><a class="btn-floating yellow darken-2 modal-trigger" href="#klant_kiezen_modal"><i class="material-icons"><img src="img/wrench.png" style="height: 24px; width: 24px;"></i></a>
+            <li><a class="btn-floating red darken-1 modal-trigger" href="#modal_wegsleep"><i class="material-icons"><i
+                            class="material-icons"><img src="img/tow-truck.png"
+                                style="height: 18px; width: 26px;"></i></a></li>
+            <li><a class="btn-floating blue darken-4 modal-trigger" href="#modal2"><i class="material-icons"><img
+                            src="img/car-icon.png" style="height: 24px; width: 24px;"></i></a></li>
+            <li><a class="btn-floating yellow darken-2 modal-trigger" href="#klant_kiezen_modal"><i
+                        class="material-icons"><img src="img/wrench.png" style="height: 24px; width: 24px;"></i></a>
             </li>
         </ul>
     </div>
@@ -331,7 +333,8 @@ require_once "incl/config.php";
                     </div>
                     <div class="row">
                         <div class="input-field col s6">
-                            <button class="blue darken-4 waves-effect waves-light btn modal-trigger" href="#modal1">Voertuig registreren</button>
+                            <button class="blue darken-4 waves-effect waves-light btn modal-trigger"
+                                href="#modal1">Voertuig registreren</button>
                             <button class="blue darken-4 waves-effect waves-light btn" type="submit">Opslaan</button>
                         </div>
                     </div>
@@ -344,7 +347,7 @@ require_once "incl/config.php";
     <script type="text/javascript">
         M.AutoInit();
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var elems = document.querySelectorAll('.fixed-action-btn');
             var instances = M.FloatingActionButton.init(elems, {
                 direction: 'top',

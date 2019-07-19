@@ -9,3 +9,9 @@ function setKlant() {
 function setKlantId() {
     klant ? document.getElementById('selectedKlantId').value = klant : '';
 }
+
+function getKlantId() {
+    const tmp = document.getElementById('klant');
+    klant = tmp.options[tmp.selectedIndex].value;
+    return klant;
+}
