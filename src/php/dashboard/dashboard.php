@@ -392,6 +392,7 @@ session_start();
                 <img class="brand-logo logo" src='../../media/logo.png'>
                 <ul id="nav-mobile" class="right">
                     <li><span class="company_name flow-text">RS AUTOWERKPLAATS</span></li>
+                    <li><a href="../login/reset.php" class="btn waves-effect yellow darken-2" style="border-radius: 30%"><i class="material-icons">edit</i></a></li>
                     <li><a href="../registerusers/Signup.php" class="btn waves-effect yellow darken-2" style="border-radius: 30%"><i class="material-icons">settings</i></a></li>
                     <li><a href='../../../index.php' class="btn waves-effect yellow darken-2" style="border-radius: 30%"><i class="material-icons">person_pin</i></a></li>
                 </ul>

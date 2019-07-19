@@ -18,17 +18,15 @@
       <div class="nav-wrapper indigo darken-4">
         <a class="brand-logo center">RS AUTOWERKPLAATS</a>
       </div>
+      </div>
     </nav>
   </div>
-
   <div class="row">
-    <div class="container">
-      <img class="brand-logo logo center" src='./src/media/logo.png' style="position=relative; width: 25vw; margin-left: 20vw;">
-    </div>
     <form action="src/php/login/login.php" method="POST">
       <div class="col s12">
         <div class="container center">
           <div class="container center">
+  <img src="./src/media/logo.png" height="160px" width="200px">
             <div class="row">
               <form class="col s12">
                 <div class="row">
@@ -54,7 +52,7 @@
             </div>
           </div>
         </div>
-      </div>
+  </div>
   </div>
 </body>
 
