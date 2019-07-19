@@ -399,19 +399,6 @@ session_start();
             </div>
         </nav>
 
-        <p class="flow-text">
-            <<>>TODO<<>> <br>
-                    <s>logo</s><br>
-                    <s>charts</s><br>
-                    <s>tabellen</s><br>
-                    <s>search</s><br>
-                    shit van mack<br>
-                    keuring klant kiezen<br>
-                    settings<br>
-                    <s>user aanmaken</s><br>
-                    <s>logout</s><br>
-                    <s>Login</s><br>
-        </p>
 
         <div class="col s12">
             <div class="container white _container">
